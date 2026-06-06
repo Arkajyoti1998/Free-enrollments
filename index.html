@@ -700,7 +700,7 @@ function rawSz(){RS.ps=+document.getElementById('rawPS').value;RS.page=1;renderR
 function rawSort(col){RS.sc===col?(RS.sd=RS.sd==='asc'?'desc':'asc'):(RS.sc=col,RS.sd='asc');rawApply();}
 
 const RAW_SHOW=['regno','student_name','JD','center','class_course','batch','acad_year','Stream','overall_class_attn','l_15d_attn'];
-const RAW_LABELS={regno:'Reg No',student_name:'Student Name',JD:'Join Date',center:'Center',class_course:'Class/Course',batch:'Batch',acad_year:'Acad Year',Stream:'Stream',overall_class_attn:'Overall Attn %',l_15d_attn:'Last 15D Attn %'};
+const RAW_LABELS={regno:'Reg No',student_name:'Student Name',JD:'Join Date',center:'Center',class_course:'Class/Course',batch:'Batch',acad_year:'Acad Year',Stream:'Stream',overall_class_attn:'Overall Attendance %',l_15d_attn:'Last 15 Days Attendance %'};
 const DATE_COLS=new Set(['JD','test_date','join_date']);
 
 function renderRaw(){
@@ -809,16 +809,41 @@ const KPI_COLS={
 };
 
 const KPI_LABELS={
-  'Total Exam':'Total Exams','Exam_Attended':'Attended','Exam_Attn%':'Exam Attn %','Avg_Marks%':'Avg Marks %',
-  'avg_physics_marks':'Avg Physics','avg_chemistry_marks':'Avg Chemistry','avg_botany_marks':'Avg Botany',
-  'avg_zoology_marks':'Avg Zoology','avg_Maths_marks':'Avg Maths','avg_biology_marks':'Avg Biology',
-  'avg_socialstudies_marks':'Avg Soc Studies','avg_english_marks':'Avg English','avg_mat_marks':'Avg MAT',
-  'avg_history_marks':'Avg History','avg_civics_marks':'Avg Civics','avg_geography_marks':'Avg Geography',
-  'avg_science_marks':'Avg Science',
-  'Total_Mains_Conducted':'Total Mains','Mains_Attempted':'Mains Attempted','Mains_Attn %':'Mains Attn %',
-  'Avg_Mains_Marks%':'Avg Mains %','Avg_Mains_Phy':'Mains Physics','Avg_Mains_Chem':'Mains Chem','Avg_Mains_Math':'Mains Maths',
-  'Total_Adv':'Total Advanced','Adv_Attempted':'Adv Attempted','Adv_Attn %':'Adv Attn %',
-  'Avg_Adv_Marks%':'Avg Adv %','Avg_Adv_Phy':'Adv Physics','Avg_Adv_Chem':'Adv Chem','Avg_Adv_Math':'Adv Maths'
+  // NEET
+  'Total Exam':'Total Exams Conducted',
+  'Exam_Attended':'Exams Attended',
+  'Exam_Attn%':'Exam Attendance %',
+  'Avg_Marks%':'Average Marks %',
+  'avg_physics_marks':'Average Physics Marks',
+  'avg_chemistry_marks':'Average Chemistry Marks',
+  'avg_botany_marks':'Average Botany Marks',
+  'avg_zoology_marks':'Average Zoology Marks',
+  // Foundation
+  'avg_Maths_marks':'Average Mathematics Marks',
+  'avg_biology_marks':'Average Biology Marks',
+  'avg_socialstudies_marks':'Average Social Studies Marks',
+  'avg_english_marks':'Average English Marks',
+  'avg_mat_marks':'Average Mental Ability (MAT) Marks',
+  'avg_history_marks':'Average History Marks',
+  'avg_civics_marks':'Average Civics Marks',
+  'avg_geography_marks':'Average Geography Marks',
+  'avg_science_marks':'Average Science Marks',
+  // JEE Mains
+  'Total_Mains_Conducted':'Total Mains Exams Conducted',
+  'Mains_Attempted':'Mains Exams Attended',
+  'Mains_Attn %':'Mains Attendance %',
+  'Avg_Mains_Marks%':'Average Mains Marks %',
+  'Avg_Mains_Phy':'Average Mains Physics Marks',
+  'Avg_Mains_Chem':'Average Mains Chemistry Marks',
+  'Avg_Mains_Math':'Average Mains Mathematics Marks',
+  // JEE Advanced
+  'Total_Adv':'Total Advanced Exams Conducted',
+  'Adv_Attempted':'Advanced Exams Attended',
+  'Adv_Attn %':'Advanced Attendance %',
+  'Avg_Adv_Marks%':'Average Advanced Marks %',
+  'Avg_Adv_Phy':'Average Advanced Physics Marks',
+  'Avg_Adv_Chem':'Average Advanced Chemistry Marks',
+  'Avg_Adv_Math':'Average Advanced Mathematics Marks'
 };
 
 // ================================================================
