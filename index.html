@@ -160,10 +160,9 @@ table.dt tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
 table.dt tbody tr:hover{background:#f5f9ff}
 table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis}
 /* ===== STUDENT LIST GRID + SUMMARY PANEL ===== */
-.tsec-grid{display:flex;gap:16px;align-items:stretch}
-.tsec-grid .tcard{flex:1;min-width:0;display:flex;flex-direction:column}
-.tsec-grid .tcard .tw{flex:1 1 auto}
-.sumPanel{width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
+.tsec-grid{display:flex;flex-direction:column;gap:16px}
+.sumPanel{width:100%;display:flex;flex-direction:row;flex-wrap:wrap;gap:12px}
+.sumPanel .sum-card{flex:1;min-width:210px}
 .sum-card{
   background:#fff;border-radius:var(--radius-lg);
   box-shadow:var(--shadow-md);border:1px solid rgba(0,0,0,.06);
@@ -185,7 +184,7 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .bd-row:last-child{border-bottom:none}
 .bd-name{font-weight:500;color:var(--gray-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bd-count{font-weight:700;color:var(--blue-600);background:var(--blue-50);padding:1px 9px;border-radius:99px;font-size:10.5px;flex-shrink:0}
-@media(max-width:992px){.tsec-grid{flex-direction:column}.sumPanel{width:100%}.sum-stats{grid-template-columns:1fr 1fr 1fr 1fr}}
+@media(max-width:992px){.sumPanel{flex-direction:column}}
 @media(max-width:576px){.sum-stats{grid-template-columns:1fr 1fr}}
 /* ===== LOADING / EMPTY ===== */
 .lst{padding:56px 20px;text-align:center;color:var(--gray-400)}
@@ -435,21 +434,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
   </div>
   <div class="tsec">
     <div class="tsec-grid">
-      <div class="tcard">
-        <div class="tcard-hdr">
-          <span class="ttl"><i class="bi bi-table"></i>Students</span>
-          <span class="sl" id="rawSl">–</span>
-        </div>
-        <div class="tw">
-          <div class="lst" id="rawLd"><div class="spr"></div><p style="margin-top:4px;font-size:13px">Fetching from Google Sheets…</p></div>
-          <table class="dt" id="rawTbl" style="display:none"><thead id="rawTH"></thead><tbody id="rawTB"></tbody></table>
-          <div class="empty" id="rawEm" style="display:none"><i class="bi bi-inbox"></i><p>No students match your filters.</p></div>
-        </div>
-        <div class="pbar">
-          <div class="psz">Rows per page: <select id="rawPS" onchange="rawSz()"><option value="10">10</option><option value="25" selected>25</option><option value="50">50</option><option value="100">100</option></select></div>
-          <div class="pbtns" id="rawPB"></div>
-        </div>
-      </div>
       <aside class="sumPanel">
         <div class="sum-card">
           <div class="sc-title"><i class="bi bi-bar-chart-fill"></i>Overview</div>
@@ -468,6 +452,21 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
           <div id="sumStream"></div>
         </div>
       </aside>
+      <div class="tcard">
+        <div class="tcard-hdr">
+          <span class="ttl"><i class="bi bi-table"></i>Students</span>
+          <span class="sl" id="rawSl">–</span>
+        </div>
+        <div class="tw">
+          <div class="lst" id="rawLd"><div class="spr"></div><p style="margin-top:4px;font-size:13px">Fetching from Google Sheets…</p></div>
+          <table class="dt" id="rawTbl" style="display:none"><thead id="rawTH"></thead><tbody id="rawTB"></tbody></table>
+          <div class="empty" id="rawEm" style="display:none"><i class="bi bi-inbox"></i><p>No students match your filters.</p></div>
+        </div>
+        <div class="pbar">
+          <div class="psz">Rows per page: <select id="rawPS" onchange="rawSz()"><option value="10">10</option><option value="25" selected>25</option><option value="50">50</option><option value="100">100</option></select></div>
+          <div class="pbtns" id="rawPB"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
