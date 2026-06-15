@@ -160,8 +160,9 @@ table.dt tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
 table.dt tbody tr:hover{background:#f5f9ff}
 table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis}
 /* ===== STUDENT LIST GRID + SUMMARY PANEL ===== */
-.tsec-grid{display:flex;gap:16px;align-items:flex-start}
-.tsec-grid .tcard{flex:1;min-width:0}
+.tsec-grid{display:flex;gap:16px;align-items:stretch}
+.tsec-grid .tcard{flex:1;min-width:0;display:flex;flex-direction:column}
+.tsec-grid .tcard .tw{flex:1 1 auto}
 .sumPanel{width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
 .sum-card{
   background:#fff;border-radius:var(--radius-lg);
