@@ -683,6 +683,14 @@ function initRaw(){
   RS.cc=h.find(x=>/course|class/i.test(x))||'';
   RS.bc=h.find(x=>/batch/i.test(x))||'';
   RS.stc=h.find(x=>/stream/i.test(x))||'';
+  // Detect Test Attendance column (flexible matching)
+  TEST_ATT_COL=h.find(x=>/test.?att/i.test(x))||'';
+  RAW_SHOW=[...RAW_SHOW_BASE];
+  RAW_LABELS={...RAW_LABELS_BASE};
+  if(TEST_ATT_COL){
+    RAW_SHOW.push(TEST_ATT_COL);
+    RAW_LABELS[TEST_ATT_COL]='Test Attendance';
+  }
   fillSel('rawF1',RS.fc);fillSel('rawF2',RS.cc);fillSel('rawF3',RS.bc);fillSel('rawF4',RS.stc);
   document.getElementById('rawTotal').textContent=DS.raw.rows.length+' Total Students';
   rawApply();
@@ -724,8 +732,12 @@ function rawClear(){
 }
 function rawSz(){RS.ps=+document.getElementById('rawPS').value;RS.page=1;renderRaw();}
 function rawSort(col){RS.sc===col?(RS.sd=RS.sd==='asc'?'desc':'asc'):(RS.sc=col,RS.sd='asc');rawApply();}
-const RAW_SHOW=['regno','student_name','JD','center','class_course','batch','acad_year','Stream','overall_class_attn','l_15d_attn','Test_Attendance'];
-const RAW_LABELS={regno:'Reg No',student_name:'Student Name',JD:'Join Date',center:'Center',class_course:'Class/Course',batch:'Batch',acad_year:'Acad Year',Stream:'Stream',overall_class_attn:'Overall Attendance %',l_15d_attn:'Last 15 Days Attendance %',Test_Attendance:'Test Attendance'};
+const RAW_SHOW_BASE=['regno','student_name','JD','center','class_course','batch','acad_year','Stream','overall_class_attn','l_15d_attn'];
+const RAW_LABELS_BASE={regno:'Reg No',student_name:'Student Name',JD:'Join Date',center:'Center',class_course:'Class/Course',batch:'Batch',acad_year:'Acad Year',Stream:'Stream',overall_class_attn:'Overall Attendance %',l_15d_attn:'Last 15 Days Attendance %'};
+// These will be populated dynamically in initRaw()
+let RAW_SHOW=[...RAW_SHOW_BASE];
+let RAW_LABELS={...RAW_LABELS_BASE};
+let TEST_ATT_COL='';
 const DATE_COLS=new Set(['JD','test_date','join_date']);
 /* ===== STUDENT LIST SUMMARY PANEL ===== */
 function renderBreakdown(id,rows,col,total,scrollable){
@@ -793,7 +805,7 @@ function renderRaw(){
   document.getElementById('rawTB').innerHTML=filtered.slice(start,end).map(row=>'<tr>'+headers.map(h=>{
     let v=String(row[h]??'');
     if(DATE_COLS.has(h)){return`<td>${esc(fmtDate(v))}</td>`;}
-    if(h==='overall_class_attn'||h==='l_15d_attn'||h==='Test_Attendance'){
+    if(h==='overall_class_attn'||h==='l_15d_attn'||(TEST_ATT_COL&&h===TEST_ATT_COL)){
       const pct=parseFloat(v);
       if(isNaN(pct)||v==='') return`<td><span class="att-na">–</span></td>`;
       const cls=pct>=75?'att-h':pct>=50?'att-m':'att-l';
