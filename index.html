@@ -646,7 +646,7 @@ async function fetchSheet(tab){
   if(!r.ok) throw new Error(`HTTP ${r.status}`);
   const j=await r.json();
   if(j.error&&!j.available_sheets) throw new Error(j.error);
-  const headers=(j.headers||[]).map(h=>String(h??'').trim()).filter(Boolean);
+  const headers=(j.headers||[]).map(h=>String(h??'').trim().replace(/^\uFEFF/,'')).filter(Boolean);
   const rows=(j.rows||[]).map(row=>{
     const o={};headers.forEach(h=>{o[h]=row[h]??'';});return o;
   }).filter(r=>Object.values(r).some(v=>String(v).trim()!==''));
@@ -683,8 +683,10 @@ function initRaw(){
   RS.cc=h.find(x=>/course|class/i.test(x))||'';
   RS.bc=h.find(x=>/batch/i.test(x))||'';
   RS.stc=h.find(x=>/stream/i.test(x))||'';
-  // Detect Test Attendance column (flexible matching)
-  TEST_ATT_COL=h.find(x=>/test.?att/i.test(x))||'';
+  // Detect Test Attendance column — exact match first, then flexible (trimmed headers)
+  TEST_ATT_COL=h.find(x=>x.trim()==='Test Attendance')||h.find(x=>/test[\s_]?att/i.test(x.trim()))||'';
+  // Normalize: store the exact header string from the sheet
+  if(TEST_ATT_COL) TEST_ATT_COL=TEST_ATT_COL.trim();
   RAW_SHOW=[...RAW_SHOW_BASE];
   RAW_LABELS={...RAW_LABELS_BASE};
   if(TEST_ATT_COL){
@@ -789,7 +791,8 @@ function renderRaw(){
   const tbl=document.getElementById('rawTbl');
   const em=document.getElementById('rawEm');
   ld.style.display='none';
-  const headers=RAW_SHOW.filter(h=>DS.raw.headers.includes(h));
+  const rawHdrSet=new Set(DS.raw.headers.map(x=>x.trim()));
+  const headers=RAW_SHOW.filter(h=>rawHdrSet.has(h.trim()));
   if(!headers.length||!RS.filtered.length){
     tbl.style.display='none';em.style.display='flex';
     document.getElementById('rawSl').textContent='0 results';
