@@ -809,8 +809,11 @@ function renderRaw(){
     let v=String(row[h]??'');
     if(DATE_COLS.has(h)){return`<td>${esc(fmtDate(v))}</td>`;}
     if(h==='overall_class_attn'||h==='l_15d_attn'||(TEST_ATT_COL&&h===TEST_ATT_COL)){
-      const pct=parseFloat(v);
+      let pct=parseFloat(v);
       if(isNaN(pct)||v==='') return`<td><span class="att-na">–</span></td>`;
+      // If stored as decimal (0–1), convert to percentage
+      if(pct>0&&pct<=1) pct=pct*100;
+      pct=Math.round(pct*100)/100;
       const cls=pct>=75?'att-h':pct>=50?'att-m':'att-l';
       const fill=pct>=75?'#10b981':pct>=50?'#f59e0b':'#ef4444';
       return`<td><div class="attn-bar"><span class="${cls}" style="min-width:40px">${pct}%</span><div class="attn-track"><div class="attn-fill" style="width:${Math.min(pct,100)}%;background:${fill}"></div></div></div></td>`;
