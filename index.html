@@ -460,7 +460,11 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
       <div class="tcard">
         <div class="tcard-hdr">
           <span class="ttl"><i class="bi bi-table"></i>Students</span>
-          <span class="sl" id="rawSl">–</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="sl" id="rawSl">–</span>
+            <button class="expbtn csv" onclick="exportRaw('csv')"><i class="bi bi-filetype-csv"></i>CSV</button>
+            <button class="expbtn excel" onclick="exportRaw('xlsx')"><i class="bi bi-file-earmark-excel"></i>Excel</button>
+          </div>
         </div>
         <div class="tw">
           <div class="lst" id="rawLd"><div class="spr"></div><p style="margin-top:4px;font-size:13px">Fetching from Google Sheets…</p></div>
@@ -1112,6 +1116,38 @@ function renderLatestCard(ex,rows){
 function applyPF(ex){ES[ex].page=1;renderPerfTable(ex);}
 function pfSz(ex){ES[ex].ps=+document.getElementById(ex+'SZ').value;ES[ex].page=1;renderPerfTable(ex);}
 function pfSort(ex,col){const st=ES[ex];st.sc===col?(st.sd=st.sd==='asc'?'desc':'asc'):(st.sc=col,st.sd='asc');renderPerfTable(ex);}
+/* ===== EXPORT RAW STUDENT LIST ===== */
+function exportRaw(fmt){
+  const data=RS.filtered;
+  if(!data.length){showToast('No students to export','error');return;}
+  const headers=RAW_SHOW.filter(h=>DS.raw.headers.includes(h));
+  const labels=headers.map(h=>RAW_LABELS[h]||h);
+  if(fmt==='csv'){
+    const lines=[labels.join(','),...data.map(r=>headers.map(h=>{
+      let v=String(r[h]??'');
+      if(DATE_COLS.has(h)) v=fmtDate(v);
+      return`"${v.replace(/"/g,'""')}"`;
+    }).join(','))];
+    const blob=new Blob([lines.join('\n')],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=`students_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(a.href);
+    showToast('CSV downloaded!','success');
+  }else{
+    const exportData=data.map(r=>{
+      const o={};
+      headers.forEach(h=>{
+        let v=String(r[h]??'');
+        if(DATE_COLS.has(h)) v=fmtDate(v);
+        o[RAW_LABELS[h]||h]=v;
+      });
+      return o;
+    });
+    const ws=XLSX.utils.json_to_sheet(exportData);
+    const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Students');
+    XLSX.writeFile(wb,`students_${new Date().toISOString().slice(0,10)}.xlsx`);
+    showToast('Excel downloaded!','success');
+  }
+}
 /* ===== EXPORT ===== */
 function exportD(ex,fmt){
   const data=ES[ex].pf;
