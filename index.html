@@ -184,6 +184,11 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .bd-row:last-child{border-bottom:none}
 .bd-name{font-weight:500;color:var(--gray-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bd-count{font-weight:700;color:var(--blue-600);background:var(--blue-50);padding:1px 9px;border-radius:99px;font-size:10.5px;flex-shrink:0}
+.bd-scroll{max-height:200px;overflow-y:auto;padding-right:4px}
+.bd-scroll::-webkit-scrollbar{width:4px}
+.bd-scroll::-webkit-scrollbar-track{background:var(--gray-100);border-radius:99px}
+.bd-scroll::-webkit-scrollbar-thumb{background:var(--blue-300);border-radius:99px}
+.bd-scroll::-webkit-scrollbar-thumb:hover{background:var(--blue-400)}
 @media(max-width:992px){.sumPanel{flex-direction:column}}
 @media(max-width:576px){.sum-stats{grid-template-columns:1fr 1fr}}
 /* ===== LOADING / EMPTY ===== */
@@ -326,8 +331,8 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
   width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
   font-size:15px;flex-shrink:0;
 }
-.tstat-txt .tv{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--gray-900);line-height:1}
-.tstat-txt .tl{font-size:9.5px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.tstat-txt .tv{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:var(--gray-900);line-height:1;letter-spacing:-.3px}
+.tstat-txt .tl{font-family:'Poppins',sans-serif;font-size:9px;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
 /* ===== EXPORT BUTTONS ===== */
 .expbtn{
   display:flex;align-items:center;gap:5px;padding:7px 13px;
@@ -719,7 +724,7 @@ const RAW_SHOW=['regno','student_name','JD','center','class_course','batch','aca
 const RAW_LABELS={regno:'Reg No',student_name:'Student Name',JD:'Join Date',center:'Center',class_course:'Class/Course',batch:'Batch',acad_year:'Acad Year',Stream:'Stream',overall_class_attn:'Overall Attendance %',l_15d_attn:'Last 15 Days Attendance %'};
 const DATE_COLS=new Set(['JD','test_date','join_date']);
 /* ===== STUDENT LIST SUMMARY PANEL ===== */
-function renderBreakdown(id,rows,col,total){
+function renderBreakdown(id,rows,col,total,scrollable){
   const el=document.getElementById(id);
   if(!el) return;
   if(!col){el.innerHTML='<div style="font-size:11.5px;color:var(--gray-400)">N/A</div>';return;}
@@ -730,14 +735,12 @@ function renderBreakdown(id,rows,col,total){
   });
   const entries=Object.entries(m).sort((a,b)=>b[1]-a[1]);
   if(!entries.length){el.innerHTML='<div style="font-size:11.5px;color:var(--gray-400)">No data</div>';return;}
-  const top=entries.slice(0,6);
-  const rest=entries.slice(6);
-  let html=top.map(([k,v])=>`<div class="bd-row"><span class="bd-name" title="${esc(k)}">${esc(k)}</span><span class="bd-count">${v}</span></div>`).join('');
-  if(rest.length){
-    const restSum=rest.reduce((a,[,v])=>a+v,0);
-    html+=`<div class="bd-row" style="opacity:.6"><span class="bd-name">+${rest.length} more</span><span class="bd-count">${restSum}</span></div>`;
+  const html=entries.map(([k,v])=>`<div class="bd-row"><span class="bd-name" title="${esc(k)}">${esc(k)}</span><span class="bd-count">${v}</span></div>`).join('');
+  if(scrollable){
+    el.innerHTML=`<div class="bd-scroll">${html}</div>`;
+  } else {
+    el.innerHTML=html;
   }
-  el.innerHTML=html;
 }
 function renderRawSummary(){
   const rows=RS.filtered;
@@ -758,11 +761,11 @@ function renderRawSummary(){
       <div class="sum-stat"><div class="ssv">${total}</div><div class="ssl">Students</div></div>
       <div class="sum-stat"><div class="ssv">${centerCount}</div><div class="ssl">Centers</div></div>
       <div class="sum-stat"><div class="ssv">${avgAtt}</div><div class="ssl">Avg Attendance</div></div>
-      <div class="sum-stat"><div class="ssv">${avgAtt15}</div><div class="ssl">Avg Last 15d</div></div>`;
+      <div class="sum-stat"><div class="ssv">${avgAtt15}</div><div class="ssl">Avg Last 15 Days Attendance</div></div>`;
   }
-  renderBreakdown('sumCenter',rows,RS.fc,total);
-  renderBreakdown('sumCourse',rows,RS.cc,total);
-  renderBreakdown('sumStream',rows,RS.stc,total);
+  renderBreakdown('sumCenter',rows,RS.fc,total,true);
+  renderBreakdown('sumCourse',rows,RS.cc,total,true);
+  renderBreakdown('sumStream',rows,RS.stc,total,false);
 }
 function renderRaw(){
   renderRawSummary();
