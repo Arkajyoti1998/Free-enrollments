@@ -623,8 +623,11 @@ async function loadAll(){
     else showToast('JEE sheet: '+(jd.reason?.message||'error'),'error');
     if(fd.status==='fulfilled'){DS.foundation=fd.value;initExamSidebar('foundation');}
     else showToast('Foundation sheet: '+(fd.reason?.message||'error'),'error');
-    if(resd.status==='fulfilled') DS.results=resd.value;
-    else showToast('Results sheet: '+(resd.reason?.message||'error'),'error');
+    if(resd.status==='fulfilled'){
+      DS.results=resd.value;
+      // AUTO-DETECT stream values present in Results for each exam tab
+      detectStreamValues();
+    } else showToast('Results sheet: '+(resd.reason?.message||'error'),'error');
     updateLbl();
     showToast('Data refreshed successfully','success');
   }catch(e){showToast('Refresh failed: '+e.message,'error');}
@@ -634,30 +637,78 @@ async function loadAll(){
 function spin(on){document.getElementById('rfbtn').classList.toggle('spinning',on);}
 function updateLbl(){document.getElementById('lbl').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
 
-/* ===== CASE-INSENSITIVE HEADER LOOKUP =====
-   Builds a map from lowercase header -> actual header for a given headers array.
-   Use resolveCol(headers, col) to find the real column name. */
+/* ===================================================================
+   FIX 1 — STREAM_MAP: flexible, auto-detected from actual Results data
+   =================================================================== */
+
+// Hard-coded candidate keywords for each exam tab.
+// We'll match Results rows whose "stream" column contains any of these (case-insensitive).
+// Results sheet stream column: NEET='NEET', JEE='JEE', Foundation='Foundation'
+// Foundation sheet stream column uses 'BOARD_EXAM' — but Results uses 'Foundation'
+// Keywords are matched against Results sheet stream values (case-insensitive, substring)
+const STREAM_KEYWORDS={
+  neet:['neet'],
+  jee:['jee'],
+  foundation:['foundation','board_exam','board','found']
+};
+
+// Populated after Results loads; maps ex -> Set of actual stream values found in Results
+const DETECTED_STREAM_VALUES={neet:null,jee:null,foundation:null};
+
+function detectStreamValues(){
+  const resHeaders=DS.results.headers;
+  const streamCol=resHeaders.find(h=>/^stream$/i.test(h))||'';
+  if(!streamCol) return; // no stream column — we'll skip filtering entirely
+  const allVals=[...new Set(DS.results.rows.map(r=>String(r[streamCol]||'').trim()).filter(Boolean))];
+  ['neet','jee','foundation'].forEach(ex=>{
+    const kws=STREAM_KEYWORDS[ex];
+    const matched=allVals.filter(v=>kws.some(kw=>v.toLowerCase().includes(kw)));
+    DETECTED_STREAM_VALUES[ex]=matched.length?matched:null; // null = don't filter by stream
+  });
+}
+
+/* ===================================================================
+   FIX 2 — getResultsForStudent: uses auto-detected stream values
+   =================================================================== */
+function getResultsForStudent(ex,reg){
+  const resData=DS.results;
+  const rrc=resData.headers.find(h=>/regno/i.test(h))||resData.headers[0]||'';
+  const streamCol=resData.headers.find(h=>/^stream$/i.test(h))||'';
+  const allowedStreams=DETECTED_STREAM_VALUES[ex]; // null means "no stream filter"
+
+  return resData.rows.filter(r=>{
+    if(String(r[rrc]||'').trim()!==reg) return false;
+    // Only filter by stream if we detected valid stream values AND a stream column exists
+    if(allowedStreams && streamCol){
+      const rv=String(r[streamCol]||'').trim();
+      return allowedStreams.some(sv=>rv.toLowerCase()===sv.toLowerCase());
+    }
+    return true;
+  });
+}
+
+/* ===================================================================
+   CASE-INSENSITIVE HEADER LOOKUP (unchanged)
+   =================================================================== */
 function buildHeaderMap(headers){
   const m={};
   headers.forEach(h=>{m[h.toLowerCase().replace(/[\s_]/g,'')]=h;});
   return m;
 }
-
-// Resolve a logical column name to the actual header in the sheet (case-insensitive, ignores spaces/underscores)
-function resolveCol(headers, col){
+function resolveCol(headers,col){
   const key=col.toLowerCase().replace(/[\s_]/g,'');
   const m=buildHeaderMap(headers);
   return m[key]||null;
 }
-
-// Get value from a row using case-insensitive column matching
-function getVal(row, headers, col){
-  const real=resolveCol(headers, col);
+function getVal(row,headers,col){
+  const real=resolveCol(headers,col);
   if(real) return row[real]??'';
   return '';
 }
 
-/* ===== RAW ===== */
+/* ===================================================================
+   RAW (unchanged)
+   =================================================================== */
 function initRaw(){
   const h=DS.raw.headers;
   RS.fc=h.find(x=>/center/i.test(x))||'';
@@ -676,7 +727,6 @@ function initRaw(){
   document.getElementById('rawTotal').textContent=DS.raw.rows.length+' Total Students';
   rawApply();
 }
-
 function fillSel(id,col){
   const s=document.getElementById(id);
   while(s.options.length>1) s.remove(1);
@@ -684,7 +734,6 @@ function fillSel(id,col){
   [...new Set(DS.raw.rows.map(r=>String(r[col]||'')).filter(Boolean))].sort()
     .forEach(v=>{const o=document.createElement('option');o.value=o.textContent=v;s.appendChild(o);});
 }
-
 function rawApply(){
   const q=(document.getElementById('rawSearch').value||'').toLowerCase();
   const f1=document.getElementById('rawF1').value;
@@ -708,7 +757,6 @@ function rawApply(){
   }
   RS.page=1;renderRaw();
 }
-
 function rawClear(){
   document.getElementById('rawSearch').value='';
   ['rawF1','rawF2','rawF3','rawF4'].forEach(id=>document.getElementById(id).value='');
@@ -738,7 +786,6 @@ function renderBreakdown(id,rows,col,total,scrollable){
   const html=entries.map(([k,v])=>`<div class="bd-row"><span class="bd-name" title="${esc(k)}">${esc(k)}</span><span class="bd-count">${v}</span></div>`).join('');
   el.innerHTML=scrollable?`<div class="bd-scroll">${html}</div>`:html;
 }
-
 function renderRawSummary(){
   const rows=RS.filtered;
   const total=rows.length;
@@ -764,7 +811,6 @@ function renderRawSummary(){
   renderBreakdown('sumCourse',rows,RS.cc,total,true);
   renderBreakdown('sumStream',rows,RS.stc,total,false);
 }
-
 function renderRaw(){
   renderRawSummary();
   const ld=document.getElementById('rawLd');
@@ -815,7 +861,6 @@ function initExamSidebar(ex){
   }
   filterExamName(ex);
 }
-
 function onExamCenterChange(ex){
   document.getElementById(ex+'NameI').value='';
   ES[ex].sel=null;
@@ -825,7 +870,6 @@ function onExamCenterChange(ex){
   document.getElementById(ex+'PH').style.display='flex';
   document.getElementById(ex+'PS').style.display='none';
 }
-
 function filterExamName(ex){
   const data=DS[ex];
   const dropId=ex+'NameDrop';
@@ -850,16 +894,15 @@ function filterExamName(ex){
     return`<div class="ritem ${isSel?'selected':''}" onclick="selectExamStudent('${ex}','${escAttr(rg)}')">${esc(nm)} <span style="font-size:10px;opacity:.6">${esc(rg)}</span></div>`;
   }).join('');
 }
-
 function selectExamStudent(ex,reg){
   ES[ex].sel=reg;
   filterExamName(ex);
   renderExamStudent(ex);
 }
 
-/* ===== KPI CONFIG =====
-   Logical column names — resolved at runtime using resolveCol() against actual sheet headers.
-   This makes matching case-insensitive and space/underscore tolerant. */
+/* ===================================================================
+   KPI CONFIG
+   =================================================================== */
 const JEE_MAINS_COLS=['Total_Mains_Conducted','Mains_Attempted','Mains_Attn %','Avg_Mains_Marks%','Avg_Mains_Phy','Avg_Mains_Chem','Avg_Mains_Math'];
 const JEE_ADV_COLS=['Total_Adv','Adv_Attempted','Adv_Attn %','Avg_Adv_Marks%','Avg_Adv_Phy','Avg_Adv_Chem','Avg_Adv_Math'];
 const KPI_COLS={
@@ -879,29 +922,25 @@ const KPI_LABELS={
 };
 const COLORS=['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14'];
 
-/* KEY FIX: resolve column using case-insensitive matching against actual sheet headers */
-function getKpiVal(student, col, headers){
-  // 1. Exact match first
+function getKpiVal(student,col,headers){
   if(student[col]!==undefined) return student[col];
-  // 2. Case-insensitive + strip spaces/underscores
-  const real=resolveCol(headers, col);
-  if(real && student[real]!==undefined) return student[real];
+  const real=resolveCol(headers,col);
+  if(real&&student[real]!==undefined) return student[real];
   return undefined;
 }
-
-function formatKpiVal(val, col){
+function formatKpiVal(val,col){
   let vs=String(val??'–');
   if(vs===''||vs==='undefined'||vs==='null') vs='–';
-  if(/attn%|attn\s%|marks%/i.test(col) && vs!=='–' && vs!=='-' && !isNaN(vs)){
+  // Only append % for cols that are explicitly percentage cols
+  if(/exam_attn%|attn\s%|mains_attn|adv_attn|avg_marks%|avg_mains_marks|avg_adv_marks/i.test(col)&&vs!=='–'&&vs!=='-'&&!isNaN(vs)){
     const n=parseFloat(vs);
-    vs=(n<=1?(n*100).toFixed(1):n.toFixed(1))+'%';
-  } else if(vs!=='–' && !isNaN(vs) && String(vs).includes('.')){
+    vs=(n>0&&n<=1?(n*100).toFixed(1):n.toFixed(1))+'%';
+  } else if(vs!=='–'&&!isNaN(vs)&&String(vs).includes('.')){
     vs=parseFloat(vs).toFixed(2);
   }
   return vs;
 }
-
-function buildKpiRow(cols, student, headers, overrides={}){
+function buildKpiRow(cols,student,headers,overrides={}){
   return `<div class="krow">${cols.map((col,i)=>{
     const val=Object.prototype.hasOwnProperty.call(overrides,col)?overrides[col]:getKpiVal(student,col,headers);
     const vs=formatKpiVal(val,col);
@@ -909,7 +948,6 @@ function buildKpiRow(cols, student, headers, overrides={}){
     return`<div class="kcard ${COLORS[i%COLORS.length]}"><div class="ktit">${esc(lbl)}</div><div class="kval">${esc(vs)}</div></div>`;
   }).join('')}</div>`;
 }
-
 function computeAvgPct(rows){
   let sumScore=0,sumTotal=0;
   rows.forEach(r=>{
@@ -920,19 +958,81 @@ function computeAvgPct(rows){
   return sumTotal>0?(sumScore/sumTotal*100):null;
 }
 
-function getResultsForStudent(ex,reg){
-  const resData=DS.results;
-  const rrc=resData.headers.find(h=>/regno/i.test(h))||resData.headers[0]||'';
-  const streamCol=resData.headers.find(h=>/^stream$/i.test(h))||'';
-  const streamFilter=STREAM_MAP[ex];
-  return resData.rows.filter(r=>{
-    if(String(r[rrc]||'').trim()!==reg) return false;
-    if(streamFilter&&streamCol) return String(r[streamCol]||'').toUpperCase()===streamFilter;
-    return true;
+/* ===================================================================
+   FIX 3 — computeAvgSubjectFromResults
+   For Foundation (and NEET), if the exam-tab sheet has avg subject cols
+   that are empty/missing, fall back to computing them live from Results rows.
+   Subject col mapping: logical KPI col name -> Results col name(s) to try.
+   =================================================================== */
+const SUBJECT_COL_MAP={
+  // Foundation KPI col -> possible Results sheet column names
+  'avg_Maths_marks':    ['maths_marks','math_marks','mathematics_marks'],
+  'avg_biology_marks':  ['biology_marks'],
+  'avg_socialstudies_marks':['socialstudies_marks','social_studies_marks','ss_marks'],
+  'avg_english_marks':  ['english_marks'],
+  'avg_mat_marks':      ['mat_marks'],
+  'avg_history_marks':  ['history_marks'],
+  'avg_civics_marks':   ['civics_marks'],
+  'avg_geography_marks':['geography_marks'],
+  'avg_science_marks':  ['science_marks'],
+  // NEET KPI cols -> Results cols
+  'avg_physics_marks':  ['physics_marks'],
+  'avg_chemistry_marks':['chemistry_marks'],
+  'avg_botany_marks':   ['botany_marks'],
+  'avg_zoology_marks':  ['zoology_marks'],
+};
+
+function computeSubjectAvgsFromResults(resultsRows,resHeaders){
+  const avgs={};
+  Object.entries(SUBJECT_COL_MAP).forEach(([kpiCol,candidates])=>{
+    let realCol=null;
+    for(const cand of candidates){
+      const found=resolveCol(resHeaders,cand);
+      if(found){realCol=found;break;}
+    }
+    if(!realCol) return;
+    const vals=resultsRows
+      .map(r=>parseFloat(r[realCol]||''))
+      .filter(v=>!isNaN(v)&&v!==0);
+    if(!vals.length) return;
+    let avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+    // If all values are in 0–1 range, they are stored as decimals → convert to percentage
+    if(vals.every(v=>v>=0&&v<=1)) avg=avg*100;
+    avgs[kpiCol]=avg.toFixed(2);
   });
+  return avgs;
 }
 
-/* ===== EXAM STUDENT RENDER ===== */
+/* ===================================================================
+   FIX 4 — computeExamKPIsFromResults
+   If Foundation sheet is missing Total Exam / Exam_Attended / Exam_Attn% / Avg_Marks%,
+   compute them live from Results rows for this student.
+   =================================================================== */
+function computeExamKPIsFromResults(resultsRows,resHeaders){
+  const rsCol=resolveCol(resHeaders,'resultstatus')||'resultstatus';
+  const usCol=resolveCol(resHeaders,'userscore')||'userscore';
+  const tmCol=resolveCol(resHeaders,'totalmarks')||'totalmarks';
+  const total=resultsRows.length;
+  const attended=resultsRows.filter(r=>String(r[rsCol]||'').toLowerCase().includes('present')).length;
+  const attnPct=total>0?((attended/total)*100).toFixed(1):null;
+  let sumScore=0,sumTotal=0;
+  resultsRows.forEach(r=>{
+    const sc=parseFloat(r[usCol]||'');
+    const tm=parseFloat(r[tmCol]||'');
+    if(!isNaN(sc)&&!isNaN(tm)&&tm>0){sumScore+=sc;sumTotal+=tm;}
+  });
+  const avgMarksPct=sumTotal>0?((sumScore/sumTotal)*100).toFixed(1):null;
+  return{
+    'Total Exam': total||null,
+    'Exam_Attended': attended||null,
+    'Exam_Attn%': attnPct,
+    'Avg_Marks%': avgMarksPct
+  };
+}
+
+/* ===================================================================
+   EXAM STUDENT RENDER — Foundation now gets live-computed KPIs
+   =================================================================== */
 function renderExamStudent(ex){
   const reg=ES[ex].sel;if(!reg) return;
   const data=DS[ex];
@@ -973,8 +1073,8 @@ function renderExamStudent(ex){
     const advRows=allRes.filter(r=>/adv/i.test(String(r.test_pattern||'')));
     const mainsAvg=computeAvgPct(mainsRows);
     const advAvg=computeAvgPct(advRows);
-    const mainsRow=buildKpiRow(JEE_MAINS_COLS, student, h, {'Avg_Mains_Marks%':mainsAvg});
-    const advRow=buildKpiRow(JEE_ADV_COLS, student, h, {'Avg_Adv_Marks%':advAvg});
+    const mainsRow=buildKpiRow(JEE_MAINS_COLS,student,h,{'Avg_Mains_Marks%':mainsAvg});
+    const advRow=buildKpiRow(JEE_ADV_COLS,student,h,{'Avg_Adv_Marks%':advAvg});
     kpiEl.innerHTML=`
       <div class="kpi-group">
         <div class="kpi-group-header"><i class="bi bi-calculator" style="color:var(--blue-500)"></i>Mains</div>
@@ -985,10 +1085,38 @@ function renderExamStudent(ex){
         ${advRow}
       </div>`;
   } else {
+    /* ---------------------------------------------------------------
+       FIX: For NEET and Foundation, compute missing KPIs from Results
+       --------------------------------------------------------------- */
     const cols=KPI_COLS[ex]||[];
+    // Get all Results rows for this student in this stream
+    const resRows=getResultsForStudent(ex,reg);
+    const resHeaders=DS.results.headers;
+
+    // Live-compute exam-level KPIs from Results (used as fallback if sheet col is blank/missing)
+    const liveExamKPIs=computeExamKPIsFromResults(resRows,resHeaders);
+
+    // Live-compute subject averages from Results rows
+    const liveSubjectAvgs=computeSubjectAvgsFromResults(resRows,resHeaders);
+
     kpiEl.innerHTML=`<div class="kpi-group"><div class="krow">${cols.map((col,i)=>{
-      /* KEY FIX: use getKpiVal which does case-insensitive resolution */
-      const val=getKpiVal(student,col,h);
+      // 1. Try to get value from exam-tab sheet row (case-insensitive)
+      let val=getKpiVal(student,col,h);
+      const vs_raw=String(val??'').trim();
+
+      // 2. For attendance/exam-count cols: Foundation sheet often stores 0 incorrectly.
+      //    Force live-compute if sheet value is blank, '0', or 'undefined'.
+      const isCountOrAttn=/^(Exam_Attended|Exam_Attn%|Avg_Marks%)$/i.test(col);
+      const isMissing=(vs_raw===''||vs_raw==='undefined'||vs_raw==='null');
+      const isZeroForAttended=(isCountOrAttn&&vs_raw==='0');
+      if((isMissing||isZeroForAttended)&&liveExamKPIs[col]!=null){
+        val=liveExamKPIs[col];
+      }
+      // 3. Fallback to live-computed subject averages from Results
+      if((isMissing)&&liveSubjectAvgs[col]!=null){
+        val=liveSubjectAvgs[col];
+      }
+
       const vs=formatKpiVal(val,col);
       const lbl=KPI_LABELS[col]||col;
       return`<div class="kcard ${COLORS[i%COLORS.length]}"><div class="ktit">${esc(lbl)}</div><div class="kval">${esc(vs)}</div></div>`;
@@ -998,8 +1126,9 @@ function renderExamStudent(ex){
   renderPerfTable(ex);
 }
 
-/* ===== PERFORMANCE TABLE =====
-   PERF_DEF cols are logical names; resolved against actual Results sheet headers at render time. */
+/* ===================================================================
+   PERFORMANCE TABLE (with FIX: stream-filtered Results)
+   =================================================================== */
 const PERF_DEF={
   neet:{
     cols:['test_date','test_name','totalmarks','userscore','markspercent','AIR','physics_marks','chemistry_marks','botany_marks','zoology_marks','resultstatus'],
@@ -1010,23 +1139,18 @@ const PERF_DEF={
     labels:{test_date:'Date',test_name:'Test Name',test_pattern:'Pattern',paper_type:'Paper',totalmarks:'Total',userscore:'Score',markspercent:'%',AIR:'AIR',physics_marks:'Physics',chemistry_marks:'Chemistry',maths_marks:'Maths',resultstatus:'Status'}
   },
   foundation:{
-    cols:['test_date','test_name','totalmarks','userscore','markspercent','biology_marks','socialstudies_marks','english_marks','mat_marks','history_marks','civics_marks','geography_marks','science_marks','resultstatus'],
-    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',biology_marks:'Biology',socialstudies_marks:'Soc Studies',english_marks:'English',mat_marks:'MAT',history_marks:'History',civics_marks:'Civics',geography_marks:'Geography',science_marks:'Science',resultstatus:'Status'}
+    cols:['test_date','test_name','totalmarks','userscore','markspercent','maths_marks','biology_marks','socialstudies_marks','english_marks','mat_marks','history_marks','civics_marks','geography_marks','science_marks','resultstatus'],
+    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',maths_marks:'Maths',biology_marks:'Biology',socialstudies_marks:'Soc Studies',english_marks:'English',mat_marks:'MAT',history_marks:'History',civics_marks:'Civics',geography_marks:'Geography',science_marks:'Science',resultstatus:'Status'}
   }
 };
-const STREAM_MAP={neet:'NEET',jee:'JEE',foundation:'BOARD_EXAM'};
 
-/* KEY FIX: build a resolved column map for the Results sheet once per call.
-   Maps each logical PERF_DEF col -> actual header in DS.results.headers. */
 function buildPerfColMap(ex){
   const resHeaders=DS.results.headers;
   const def=PERF_DEF[ex]||{cols:[]};
   const map={};
   def.cols.forEach(col=>{
-    // Exact match first
     if(resHeaders.includes(col)){map[col]=col;return;}
-    // Case-insensitive + strip spaces/underscores
-    const real=resolveCol(resHeaders, col);
+    const real=resolveCol(resHeaders,col);
     if(real) map[col]=real;
   });
   return map;
@@ -1035,18 +1159,8 @@ function buildPerfColMap(ex){
 function renderPerfTable(ex){
   const st=ES[ex];
   const reg=st.sel;
-  const resData=DS.results;
-  const rrc=resData.headers.find(h=>/regno/i.test(h))||resData.headers[0]||'';
-  const streamCol=resData.headers.find(h=>/^stream$/i.test(h))||'';
-  const streamFilter=STREAM_MAP[ex];
-
-  let rows=resData.rows.filter(r=>{
-    if(String(r[rrc]||'').trim()!==reg) return false;
-    if(streamFilter&&streamCol){
-      return String(r[streamCol]||'').toUpperCase()===streamFilter;
-    }
-    return true;
-  });
+  // Use the fixed getResultsForStudent (stream-aware, auto-detected)
+  let rows=getResultsForStudent(ex,reg);
 
   const q=(document.getElementById(ex+'TS')?.value||'').toLowerCase();
   if(q) rows=rows.filter(r=>Object.values(r).join(' ').toLowerCase().includes(q));
@@ -1063,9 +1177,7 @@ function renderPerfTable(ex){
   renderLatestCard(ex,rows);
 
   const def=PERF_DEF[ex]||{cols:[],labels:{}};
-  /* KEY FIX: resolve logical col names to actual sheet headers */
   const colMap=buildPerfColMap(ex);
-  // Only show cols that exist in the sheet
   const showLogical=def.cols.filter(c=>colMap[c]);
 
   const headEl=document.getElementById(ex+'PH2');
@@ -1098,7 +1210,22 @@ function renderPerfTable(ex){
         if(lv.includes('absent')) return`<td><span class="bf">${esc(v)||'Absent'}</span></td>`;
         return`<td><span class="bo">${esc(v)||'–'}</span></td>`;
       }
-      if(logCol==='markspercent'&&v&&!isNaN(v)) v=parseFloat(v).toFixed(1)+'%';
+      // markspercent: may be stored as decimal (0.9375) or percentage (93.75)
+      if(logCol==='markspercent'&&v&&!isNaN(v)){
+        let n=parseFloat(v);
+        if(n>0&&n<=1) n=n*100;
+        v=n.toFixed(1)+'%';
+      }
+      // Subject marks: may be stored as decimals (0–1 range) → convert to score out of total
+      // Display as-is but normalise if clearly decimal
+      const isSubjectCol=!['test_date','test_name','test_pattern','paper_type','totalmarks','userscore','markspercent','AIR','resultstatus'].includes(logCol);
+      if(isSubjectCol&&v&&!isNaN(v)){
+        let n=parseFloat(v);
+        // If value is between 0 and 1 (exclusive of 0), multiply by totalmarks to get actual marks
+        // But we don't have totalmarks per subject easily, so just show rounded value
+        // A value like 0.9375 means 0.9375 * total_subject_marks — display as decimal score
+        v=n%1!==0?n.toFixed(2):String(n);
+      }
       return`<td>${esc(v)||'<span style="color:var(--gray-300)">–</span>'}</td>`;
     }).join('')+'</tr>').join('');
   }
@@ -1110,13 +1237,11 @@ function renderStatsBar(ex,rows){
   const bar=document.getElementById(ex+'StatsBar');
   if(!bar) return;
   const total=rows.length;
-  // Resolve resultstatus column
   const resHeaders=DS.results.headers;
   const rsCol=resolveCol(resHeaders,'resultstatus')||'resultstatus';
   const usCol=resolveCol(resHeaders,'userscore')||'userscore';
   const tmCol=resolveCol(resHeaders,'totalmarks')||'totalmarks';
   const airCol=resolveCol(resHeaders,'AIR')||'AIR';
-
   const present=rows.filter(r=>String(r[rsCol]||'').toLowerCase().includes('present')).length;
   let sumScore=0,sumTotal=0;
   rows.forEach(r=>{
@@ -1152,7 +1277,6 @@ function renderLatestCard(ex,rows){
   const mpCol=resolveCol(resHeaders,'markspercent')||'markspercent';
   const airCol=resolveCol(resHeaders,'AIR')||'AIR';
   const rsCol=resolveCol(resHeaders,'resultstatus')||'resultstatus';
-
   const sorted=[...rows].sort((a,b)=>{
     const da=new Date(a[tdCol]||0),db=new Date(b[tdCol]||0);
     return db-da;
@@ -1161,11 +1285,16 @@ function renderLatestCard(ex,rows){
   card.classList.add('vis');
   document.getElementById(ex+'LatestName').textContent=r[tnCol]||'–';
   const pmp=r[mpCol];
-  const pills=[
+  let pmpDisplay=null;
+  if(pmp&&!isNaN(pmp)){
+    let n=parseFloat(pmp);
+    if(n>0&&n<=1) n=n*100;
+    pmpDisplay=n.toFixed(1)+'%';
+  }  const pills=[
     r[tdCol]?fmtDate(r[tdCol]):null,
     r[tmCol]?'Total: '+r[tmCol]:null,
     r[usCol]?'Score: '+r[usCol]:null,
-    pmp&&!isNaN(pmp)?parseFloat(pmp).toFixed(1)+'%':null,
+    pmpDisplay,
     r[airCol]?'AIR: '+r[airCol]:null,
     r[rsCol]||null
   ].filter(Boolean);
@@ -1277,3 +1406,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
