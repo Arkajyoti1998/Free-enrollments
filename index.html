@@ -30,7 +30,6 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:#eef2f7;color:var(--gray-800);min-height:100vh;font-size:14px}
-/* ===== NAVBAR ===== */
 .top-nav{
   position:sticky;top:0;z-index:1000;
   background:var(--blue-950);
@@ -72,9 +71,7 @@ body{font-family:'Inter',sans-serif;background:#eef2f7;color:var(--gray-800);min
 .rfbtn.spinning i{animation:spin .7s linear infinite}
 .lbl{font-size:11px;color:rgba(255,255,255,.35);white-space:nowrap}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* ===== PAGES ===== */
 .page{display:none}.page.active{display:block}
-/* ===== PAGE HEADER ===== */
 .ph{
   background:var(--blue-900);
   padding:26px 28px 24px;color:#fff;position:relative;overflow:hidden;
@@ -100,7 +97,6 @@ body{font-family:'Inter',sans-serif;background:#eef2f7;color:var(--gray-800);min
   background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);
   border-radius:99px;padding:4px 13px;font-size:11px;font-weight:600;letter-spacing:.1px;
 }
-/* ===== FILTERS BAR ===== */
 .fbar{
   background:#fff;border-bottom:1px solid var(--gray-200);
   padding:9px 20px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;
@@ -129,7 +125,6 @@ body{font-family:'Inter',sans-serif;background:#eef2f7;color:var(--gray-800);min
   cursor:pointer;transition:all .18s;white-space:nowrap;
 }
 .clrbtn:hover{border-color:var(--danger);color:var(--danger);background:#fef2f2}
-/* ===== TABLE SECTION ===== */
 .tsec{padding:20px 24px}
 .tcard{
   background:#fff;border-radius:var(--radius-lg);
@@ -159,7 +154,6 @@ table.dt thead th.sa .si{opacity:1}
 table.dt tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
 table.dt tbody tr:hover{background:#f5f9ff}
 table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis}
-/* ===== STUDENT LIST GRID + SUMMARY PANEL ===== */
 .tsec-grid{display:flex;flex-direction:column;gap:16px}
 .sumPanel{width:100%;display:flex;flex-direction:row;flex-wrap:wrap;gap:12px}
 .sumPanel .sum-card{flex:1;min-width:210px}
@@ -191,13 +185,11 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .bd-scroll::-webkit-scrollbar-thumb:hover{background:var(--blue-400)}
 @media(max-width:992px){.sumPanel{flex-direction:column}}
 @media(max-width:576px){.sum-stats{grid-template-columns:1fr 1fr}}
-/* ===== LOADING / EMPTY ===== */
 .lst{padding:56px 20px;text-align:center;color:var(--gray-400)}
 .spr{width:36px;height:36px;border:3px solid var(--gray-200);border-top-color:var(--blue-500);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
 .empty{padding:56px 20px;text-align:center;color:var(--gray-400);display:flex;flex-direction:column;align-items:center;gap:6px}
 .empty i{font-size:40px;opacity:.35}
 .empty p{font-size:13px}
-/* ===== PAGINATION ===== */
 .pbar{
   padding:10px 16px;border-top:1px solid var(--gray-100);
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;
@@ -214,7 +206,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .pgb:hover:not(:disabled){border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
 .pgb.active{border-color:var(--blue-500);background:var(--blue-500);color:#fff;font-weight:700}
 .pgb:disabled{opacity:.3;cursor:default}
-/* ===== EXAM LAYOUT ===== */
 .exlay{display:flex;min-height:calc(100vh - 58px)}
 .exsb{
   width:256px;background:#fff;
@@ -253,7 +244,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .ritem:hover{background:var(--blue-50);color:var(--blue-600);padding-left:14px}
 .ritem.selected{background:linear-gradient(135deg,var(--blue-600),var(--blue-500));color:#fff;font-weight:600;padding-left:11px}
 .exmain{flex:1;padding:20px 22px;overflow-x:hidden;background:#eef2f7}
-/* ===== SUMMARY CARD ===== */
 .sumcard{
   background:var(--blue-900);
   border-radius:var(--radius-xl);padding:22px 26px;color:#fff;
@@ -287,7 +277,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
   border-radius:99px;padding:4px 12px;font-size:11px;font-weight:500;
 }
 .mchip:hover{background:rgba(255,255,255,.16)}
-/* ===== KPI GROUP HEADER ===== */
 .kpi-group-header{
   font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
   color:var(--gray-400);margin:0 0 8px;display:flex;align-items:center;gap:8px;
@@ -295,7 +284,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .kpi-group-header span{display:flex;align-items:center;gap:5px;white-space:nowrap}
 .kpi-group-header::after{content:'';flex:1;height:1px;background:var(--gray-200)}
 .kpi-group{margin-bottom:16px}
-/* ===== KPI ROW ===== */
 .krow{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
 .krow::-webkit-scrollbar{height:3px}
 .krow::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:99px}
@@ -317,10 +305,8 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .kcard.c13{border-top-color:#84cc16}.kcard.c14{border-top-color:#f97316}
 .ktit{font-family:'Poppins',sans-serif;font-size:9.5px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;white-space:nowrap}
 .kval{font-family:'Poppins',sans-serif;font-size:21px;font-weight:700;color:var(--gray-900);line-height:1;letter-spacing:-.4px}
-/* ===== SECTION TITLE ===== */
 .stit{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:800;color:var(--gray-800);display:flex;align-items:center;gap:7px;letter-spacing:-.2px}
 .stit i{color:var(--blue-500)}
-/* ===== STATS BAR ===== */
 .tstat-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
 .tstat{
   background:#fff;border-radius:var(--radius-md);padding:12px 16px;
@@ -333,7 +319,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 }
 .tstat-txt .tv{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:var(--gray-900);line-height:1;letter-spacing:-.3px}
 .tstat-txt .tl{font-family:'Poppins',sans-serif;font-size:9px;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
-/* ===== EXPORT BUTTONS ===== */
 .expbtn{
   display:flex;align-items:center;gap:5px;padding:7px 13px;
   border-radius:var(--radius-sm);font-size:11.5px;font-weight:600;cursor:pointer;
@@ -343,11 +328,9 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .expbtn.csv:hover{background:var(--success);color:#fff;box-shadow:0 4px 12px rgba(16,185,129,.25)}
 .expbtn.excel{border-color:#16a34a;color:#16a34a;background:#f0fdf4}
 .expbtn.excel:hover{background:#16a34a;color:#fff;box-shadow:0 4px 12px rgba(22,163,74,.25)}
-/* ===== STATUS BADGES ===== */
 .bp{background:#dcfce7;color:#15803d;padding:3px 9px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
 .bf{background:#fee2e2;color:#b91c1c;padding:3px 9px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
 .bo{background:#fef9c3;color:#854d0e;padding:3px 9px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
-/* ===== ATTENDANCE ===== */
 .attn-bar{display:inline-flex;align-items:center;gap:7px;width:100%;min-width:130px}
 .attn-track{flex:1;height:5px;background:var(--gray-200);border-radius:99px;min-width:50px}
 .attn-fill{height:100%;border-radius:99px;transition:width .4s ease}
@@ -355,7 +338,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .att-m{color:#f59e0b;font-weight:700}
 .att-l{color:#ef4444;font-weight:700}
 .att-na{color:var(--gray-400)}
-/* ===== PLACEHOLDER ===== */
 .pholder{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   min-height:300px;color:var(--gray-300);text-align:center;
@@ -363,7 +345,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 }
 .pholder i{font-size:48px;margin-bottom:14px;opacity:.4}
 .pholder p{font-size:13px;color:var(--gray-400);font-weight:500}
-/* ===== LATEST TEST CARD ===== */
 .latest-card{
   background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);
   border-radius:var(--radius-md);padding:14px 18px;color:#fff;
@@ -376,7 +357,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .latest-card .lc-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:6px}
 .latest-card .lc-pills{display:flex;flex-wrap:wrap;gap:5px}
 .latest-card .lc-pill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.2);padding:3px 10px;border-radius:99px;font-size:10px;font-weight:600}
-/* ===== TOAST ===== */
 .toast-c{position:fixed;bottom:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:6px}
 .tmsg{
   background:var(--gray-900);color:#fff;padding:11px 16px;border-radius:10px;
@@ -388,11 +368,9 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 .tmsg.error{background:linear-gradient(135deg,#7f1d1d,#dc2626)}
 .tmsg.info{background:linear-gradient(135deg,var(--blue-800),var(--blue-600))}
 @keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
-/* ===== SCROLLBAR ===== */
 .tw::-webkit-scrollbar{height:4px}
 .tw::-webkit-scrollbar-track{background:var(--gray-100)}
 .tw::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:99px}
-/* ===== RESPONSIVE ===== */
 @media(max-width:900px){
   .exlay{flex-direction:column}
   .exsb{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--gray-200);max-height:300px}
@@ -402,7 +380,6 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
 </style>
 </head>
 <body>
-<!-- ======== NAVBAR ======== -->
 <nav class="top-nav">
   <a class="brand" href="#">
     <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
@@ -420,7 +397,8 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
     <button class="rfbtn" id="rfbtn" onclick="loadAll()"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
   </div>
 </nav>
-<!-- ======== STUDENT LIST ======== -->
+
+<!-- STUDENT LIST -->
 <div class="page active" id="page-raw">
   <div class="ph">
     <h1><i class="bi bi-people-fill me-2"></i>Student List</h1>
@@ -479,15 +457,14 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
     </div>
   </div>
 </div>
-<!-- ======== NEET ======== -->
+
+<!-- NEET -->
 <div class="page" id="page-neet">
   <div class="exlay">
     <aside class="exsb">
       <div class="sbsec">
         <div class="sblbl">Center</div>
-        <select class="fsel" style="width:100%" id="neetCenterF" onchange="onExamCenterChange('neet')">
-          <option value="">All Centers</option>
-        </select>
+        <select class="fsel" style="width:100%" id="neetCenterF" onchange="onExamCenterChange('neet')"><option value="">All Centers</option></select>
       </div>
       <div class="sbsec">
         <div class="sblbl">Student Name</div>
@@ -496,20 +473,12 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
       </div>
     </aside>
     <div class="exmain">
-      <div class="sumcard" id="neetSum">
-        <div class="snm" id="neetNm">–</div>
-        <div class="srid" id="neetRg">–</div>
-        <div class="smeta" id="neetMt"></div>
-      </div>
+      <div class="sumcard" id="neetSum"><div class="snm" id="neetNm">–</div><div class="srid" id="neetRg">–</div><div class="smeta" id="neetMt"></div></div>
       <div id="neetKPI"></div>
       <div class="pholder" id="neetPH"><i class="bi bi-person-bounding-box"></i><p>Select a student from the sidebar</p></div>
       <div id="neetPS" style="display:none">
         <div id="neetStatsBar" class="tstat-bar"></div>
-        <div class="latest-card" id="neetLatest">
-          <div class="lc-lbl"><i class="bi bi-clock-history me-1"></i>Latest Test</div>
-          <div class="lc-name" id="neetLatestName">–</div>
-          <div class="lc-pills" id="neetLatestPills"></div>
-        </div>
+        <div class="latest-card" id="neetLatest"><div class="lc-lbl"><i class="bi bi-clock-history me-1"></i>Latest Test</div><div class="lc-name" id="neetLatestName">–</div><div class="lc-pills" id="neetLatestPills"></div></div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
           <div class="stit"><i class="bi bi-clipboard-data-fill"></i>Test Performance</div>
           <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
@@ -526,15 +495,14 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
     </div>
   </div>
 </div>
-<!-- ======== JEE ======== -->
+
+<!-- JEE -->
 <div class="page" id="page-jee">
   <div class="exlay">
     <aside class="exsb">
       <div class="sbsec">
         <div class="sblbl">Center</div>
-        <select class="fsel" style="width:100%" id="jeeCenterF" onchange="onExamCenterChange('jee')">
-          <option value="">All Centers</option>
-        </select>
+        <select class="fsel" style="width:100%" id="jeeCenterF" onchange="onExamCenterChange('jee')"><option value="">All Centers</option></select>
       </div>
       <div class="sbsec">
         <div class="sblbl">Student Name</div>
@@ -543,20 +511,12 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
       </div>
     </aside>
     <div class="exmain">
-      <div class="sumcard" id="jeeSum">
-        <div class="snm" id="jeeNm">–</div>
-        <div class="srid" id="jeeRg">–</div>
-        <div class="smeta" id="jeeMt"></div>
-      </div>
+      <div class="sumcard" id="jeeSum"><div class="snm" id="jeeNm">–</div><div class="srid" id="jeeRg">–</div><div class="smeta" id="jeeMt"></div></div>
       <div id="jeeKPI"></div>
       <div class="pholder" id="jeePH"><i class="bi bi-person-bounding-box"></i><p>Select a student from the sidebar</p></div>
       <div id="jeePS" style="display:none">
         <div id="jeeStatsBar" class="tstat-bar"></div>
-        <div class="latest-card" id="jeeLatest">
-          <div class="lc-lbl"><i class="bi bi-clock-history me-1"></i>Latest Test</div>
-          <div class="lc-name" id="jeeLatestName">–</div>
-          <div class="lc-pills" id="jeeLatestPills"></div>
-        </div>
+        <div class="latest-card" id="jeeLatest"><div class="lc-lbl"><i class="bi bi-clock-history me-1"></i>Latest Test</div><div class="lc-name" id="jeeLatestName">–</div><div class="lc-pills" id="jeeLatestPills"></div></div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
           <div class="stit"><i class="bi bi-clipboard-data-fill"></i>Test Performance</div>
           <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
@@ -573,15 +533,14 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
     </div>
   </div>
 </div>
-<!-- ======== FOUNDATION ======== -->
+
+<!-- FOUNDATION -->
 <div class="page" id="page-foundation">
   <div class="exlay">
     <aside class="exsb">
       <div class="sbsec">
         <div class="sblbl">Center</div>
-        <select class="fsel" style="width:100%" id="foundationCenterF" onchange="onExamCenterChange('foundation')">
-          <option value="">All Centers</option>
-        </select>
+        <select class="fsel" style="width:100%" id="foundationCenterF" onchange="onExamCenterChange('foundation')"><option value="">All Centers</option></select>
       </div>
       <div class="sbsec">
         <div class="sblbl">Student Name</div>
@@ -590,20 +549,12 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
       </div>
     </aside>
     <div class="exmain">
-      <div class="sumcard" id="foundationSum">
-        <div class="snm" id="foundationNm">–</div>
-        <div class="srid" id="foundationRg">–</div>
-        <div class="smeta" id="foundationMt"></div>
-      </div>
+      <div class="sumcard" id="foundationSum"><div class="snm" id="foundationNm">–</div><div class="srid" id="foundationRg">–</div><div class="smeta" id="foundationMt"></div></div>
       <div id="foundationKPI"></div>
       <div class="pholder" id="foundationPH"><i class="bi bi-person-bounding-box"></i><p>Select a student from the sidebar</p></div>
       <div id="foundationPS" style="display:none">
         <div id="foundationStatsBar" class="tstat-bar"></div>
-        <div class="latest-card" id="foundationLatest">
-          <div class="lc-lbl"><i class="bi bi-clock-history me-1"></i>Latest Test</div>
-          <div class="lc-name" id="foundationLatestName">–</div>
-          <div class="lc-pills" id="foundationLatestPills"></div>
-        </div>
+        <div class="latest-card" id="foundationLatest"><div class="lc-lbl"><i class="bi bi-clock-history me-1"></i>Latest Test</div><div class="lc-name" id="foundationLatestName">–</div><div class="lc-pills" id="foundationLatestPills"></div></div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
           <div class="stit"><i class="bi bi-clipboard-data-fill"></i>Test Performance</div>
           <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
@@ -620,7 +571,9 @@ table.dt tbody td{padding:10px 14px;color:var(--gray-700);white-space:nowrap;max
     </div>
   </div>
 </div>
+
 <div class="toast-c" id="toastC"></div>
+
 <script>
 const API='https://script.google.com/macros/s/AKfycbzyo5Jfw2Et6s3Cnm1-ks43_jREQwpVX6MZPUaEfKSYURdbRiExt5VNV9RSByaDqzIM/exec';
 const DS={raw:{headers:[],rows:[]},neet:{headers:[],rows:[]},jee:{headers:[],rows:[]},foundation:{headers:[],rows:[]},results:{headers:[],rows:[]}};
@@ -628,6 +581,7 @@ const RS={filtered:[],page:1,ps:25,sc:null,sd:'asc',fc:'',cc:'',bc:'',stc:''};
 const ES={};
 ['neet','jee','foundation'].forEach(ex=>{ES[ex]={sel:null,pf:[],page:1,ps:10,sc:null,sd:'asc'};});
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
 function fmtDate(v){
   if(!v||String(v).trim()===''||v==='-') return '–';
   const s=String(v).trim();
@@ -641,6 +595,7 @@ function fmtDate(v){
   const yr=String(d.getFullYear()).slice(-2);
   return `${day}-${mon}-${yr}`;
 }
+
 async function fetchSheet(tab){
   const r=await fetch(`${API}?sheet=${encodeURIComponent(tab)}`,{redirect:'follow'});
   if(!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -652,6 +607,7 @@ async function fetchSheet(tab){
   }).filter(r=>Object.values(r).some(v=>String(v).trim()!==''));
   return{headers,rows};
 }
+
 async function loadAll(){
   spin(true);
   try{
@@ -674,8 +630,33 @@ async function loadAll(){
   }catch(e){showToast('Refresh failed: '+e.message,'error');}
   finally{spin(false);}
 }
+
 function spin(on){document.getElementById('rfbtn').classList.toggle('spinning',on);}
 function updateLbl(){document.getElementById('lbl').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+
+/* ===== CASE-INSENSITIVE HEADER LOOKUP =====
+   Builds a map from lowercase header -> actual header for a given headers array.
+   Use resolveCol(headers, col) to find the real column name. */
+function buildHeaderMap(headers){
+  const m={};
+  headers.forEach(h=>{m[h.toLowerCase().replace(/[\s_]/g,'')]=h;});
+  return m;
+}
+
+// Resolve a logical column name to the actual header in the sheet (case-insensitive, ignores spaces/underscores)
+function resolveCol(headers, col){
+  const key=col.toLowerCase().replace(/[\s_]/g,'');
+  const m=buildHeaderMap(headers);
+  return m[key]||null;
+}
+
+// Get value from a row using case-insensitive column matching
+function getVal(row, headers, col){
+  const real=resolveCol(headers, col);
+  if(real) return row[real]??'';
+  return '';
+}
+
 /* ===== RAW ===== */
 function initRaw(){
   const h=DS.raw.headers;
@@ -683,9 +664,7 @@ function initRaw(){
   RS.cc=h.find(x=>/course|class/i.test(x))||'';
   RS.bc=h.find(x=>/batch/i.test(x))||'';
   RS.stc=h.find(x=>/stream/i.test(x))||'';
-  // Detect Test Attendance column — exact match first, then flexible (trimmed headers)
   TEST_ATT_COL=h.find(x=>x.trim()==='Test Attendance')||h.find(x=>/test[\s_]?att/i.test(x.trim()))||'';
-  // Normalize: store the exact header string from the sheet
   if(TEST_ATT_COL) TEST_ATT_COL=TEST_ATT_COL.trim();
   RAW_SHOW=[...RAW_SHOW_BASE];
   RAW_LABELS={...RAW_LABELS_BASE};
@@ -697,6 +676,7 @@ function initRaw(){
   document.getElementById('rawTotal').textContent=DS.raw.rows.length+' Total Students';
   rawApply();
 }
+
 function fillSel(id,col){
   const s=document.getElementById(id);
   while(s.options.length>1) s.remove(1);
@@ -704,6 +684,7 @@ function fillSel(id,col){
   [...new Set(DS.raw.rows.map(r=>String(r[col]||'')).filter(Boolean))].sort()
     .forEach(v=>{const o=document.createElement('option');o.value=o.textContent=v;s.appendChild(o);});
 }
+
 function rawApply(){
   const q=(document.getElementById('rawSearch').value||'').toLowerCase();
   const f1=document.getElementById('rawF1').value;
@@ -727,6 +708,7 @@ function rawApply(){
   }
   RS.page=1;renderRaw();
 }
+
 function rawClear(){
   document.getElementById('rawSearch').value='';
   ['rawF1','rawF2','rawF3','rawF4'].forEach(id=>document.getElementById(id).value='');
@@ -734,14 +716,14 @@ function rawClear(){
 }
 function rawSz(){RS.ps=+document.getElementById('rawPS').value;RS.page=1;renderRaw();}
 function rawSort(col){RS.sc===col?(RS.sd=RS.sd==='asc'?'desc':'asc'):(RS.sc=col,RS.sd='asc');rawApply();}
+
 const RAW_SHOW_BASE=['regno','student_name','JD','center','class_course','batch','acad_year','Stream','overall_class_attn','l_15d_attn'];
 const RAW_LABELS_BASE={regno:'Reg No',student_name:'Student Name',JD:'Join Date',center:'Center',class_course:'Class/Course',batch:'Batch',acad_year:'Acad Year',Stream:'Stream',overall_class_attn:'Overall Attendance %',l_15d_attn:'Last 15 Days Attendance %'};
-// These will be populated dynamically in initRaw()
 let RAW_SHOW=[...RAW_SHOW_BASE];
 let RAW_LABELS={...RAW_LABELS_BASE};
 let TEST_ATT_COL='';
 const DATE_COLS=new Set(['JD','test_date','join_date']);
-/* ===== STUDENT LIST SUMMARY PANEL ===== */
+
 function renderBreakdown(id,rows,col,total,scrollable){
   const el=document.getElementById(id);
   if(!el) return;
@@ -754,12 +736,9 @@ function renderBreakdown(id,rows,col,total,scrollable){
   const entries=Object.entries(m).sort((a,b)=>b[1]-a[1]);
   if(!entries.length){el.innerHTML='<div style="font-size:11.5px;color:var(--gray-400)">No data</div>';return;}
   const html=entries.map(([k,v])=>`<div class="bd-row"><span class="bd-name" title="${esc(k)}">${esc(k)}</span><span class="bd-count">${v}</span></div>`).join('');
-  if(scrollable){
-    el.innerHTML=`<div class="bd-scroll">${html}</div>`;
-  } else {
-    el.innerHTML=html;
-  }
+  el.innerHTML=scrollable?`<div class="bd-scroll">${html}</div>`:html;
 }
+
 function renderRawSummary(){
   const rows=RS.filtered;
   const total=rows.length;
@@ -785,6 +764,7 @@ function renderRawSummary(){
   renderBreakdown('sumCourse',rows,RS.cc,total,true);
   renderBreakdown('sumStream',rows,RS.stc,total,false);
 }
+
 function renderRaw(){
   renderRawSummary();
   const ld=document.getElementById('rawLd');
@@ -811,7 +791,6 @@ function renderRaw(){
     if(h==='overall_class_attn'||h==='l_15d_attn'||(TEST_ATT_COL&&h===TEST_ATT_COL)){
       let pct=parseFloat(v);
       if(isNaN(pct)||v==='') return`<td><span class="att-na">–</span></td>`;
-      // If stored as decimal (0–1), convert to percentage
       if(pct>0&&pct<=1) pct=pct*100;
       pct=Math.round(pct*100)/100;
       const cls=pct>=75?'att-h':pct>=50?'att-m':'att-l';
@@ -823,6 +802,7 @@ function renderRaw(){
   document.getElementById('rawSl').textContent=`${start+1}–${Math.min(end,filtered.length)} of ${filtered.length}`;
   renderPag('rawPB',filtered.length,page,ps,p=>{RS.page=p;renderRaw();});
 }
+
 /* ===== EXAM SIDEBAR ===== */
 function initExamSidebar(ex){
   const data=DS[ex];
@@ -835,6 +815,7 @@ function initExamSidebar(ex){
   }
   filterExamName(ex);
 }
+
 function onExamCenterChange(ex){
   document.getElementById(ex+'NameI').value='';
   ES[ex].sel=null;
@@ -844,6 +825,7 @@ function onExamCenterChange(ex){
   document.getElementById(ex+'PH').style.display='flex';
   document.getElementById(ex+'PS').style.display='none';
 }
+
 function filterExamName(ex){
   const data=DS[ex];
   const dropId=ex+'NameDrop';
@@ -868,13 +850,16 @@ function filterExamName(ex){
     return`<div class="ritem ${isSel?'selected':''}" onclick="selectExamStudent('${ex}','${escAttr(rg)}')">${esc(nm)} <span style="font-size:10px;opacity:.6">${esc(rg)}</span></div>`;
   }).join('');
 }
+
 function selectExamStudent(ex,reg){
   ES[ex].sel=reg;
   filterExamName(ex);
   renderExamStudent(ex);
 }
-/* ===== KPI CONFIG ===== */
-// JEE split into Mains group and Advance group
+
+/* ===== KPI CONFIG =====
+   Logical column names — resolved at runtime using resolveCol() against actual sheet headers.
+   This makes matching case-insensitive and space/underscore tolerant. */
 const JEE_MAINS_COLS=['Total_Mains_Conducted','Mains_Attempted','Mains_Attn %','Avg_Mains_Marks%','Avg_Mains_Phy','Avg_Mains_Chem','Avg_Mains_Math'];
 const JEE_ADV_COLS=['Total_Adv','Adv_Attempted','Adv_Attn %','Avg_Adv_Marks%','Avg_Adv_Phy','Avg_Adv_Chem','Avg_Adv_Math'];
 const KPI_COLS={
@@ -893,29 +878,29 @@ const KPI_LABELS={
   'Avg_Adv_Phy':'Physics','Avg_Adv_Chem':'Chemistry','Avg_Adv_Math':'Mathematics'
 };
 const COLORS=['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14'];
+
+/* KEY FIX: resolve column using case-insensitive matching against actual sheet headers */
 function getKpiVal(student, col, headers){
-  let val=student[col];
-  if(val===undefined){
-    const altKey=headers.find(k=>k.toLowerCase()===col.toLowerCase());
-    if(altKey) val=student[altKey];
-  }
-  return val;
+  // 1. Exact match first
+  if(student[col]!==undefined) return student[col];
+  // 2. Case-insensitive + strip spaces/underscores
+  const real=resolveCol(headers, col);
+  if(real && student[real]!==undefined) return student[real];
+  return undefined;
 }
+
 function formatKpiVal(val, col){
   let vs=String(val??'–');
-  if(vs===''||vs==='undefined') vs='–';
-  // Attendance % AND Marks % — stored as decimal 0-1, multiply ×100
+  if(vs===''||vs==='undefined'||vs==='null') vs='–';
   if(/attn%|attn\s%|marks%/i.test(col) && vs!=='–' && vs!=='-' && !isNaN(vs)){
     const n=parseFloat(vs);
-    // If value is already >1 it's already a percentage, don't multiply
-    vs=(n<=1 ? (n*100).toFixed(1) : n.toFixed(1))+'%';
-  }
-  // Round other decimals (but not the % ones already handled)
-  else if(vs!=='–' && !isNaN(vs) && String(vs).includes('.')){
+    vs=(n<=1?(n*100).toFixed(1):n.toFixed(1))+'%';
+  } else if(vs!=='–' && !isNaN(vs) && String(vs).includes('.')){
     vs=parseFloat(vs).toFixed(2);
   }
   return vs;
 }
+
 function buildKpiRow(cols, student, headers, overrides={}){
   return `<div class="krow">${cols.map((col,i)=>{
     const val=Object.prototype.hasOwnProperty.call(overrides,col)?overrides[col]:getKpiVal(student,col,headers);
@@ -924,7 +909,7 @@ function buildKpiRow(cols, student, headers, overrides={}){
     return`<div class="kcard ${COLORS[i%COLORS.length]}"><div class="ktit">${esc(lbl)}</div><div class="kval">${esc(vs)}</div></div>`;
   }).join('')}</div>`;
 }
-/* ===== AVG MARKS % HELPERS (sum(userscore)/sum(totalmarks)) ===== */
+
 function computeAvgPct(rows){
   let sumScore=0,sumTotal=0;
   rows.forEach(r=>{
@@ -934,6 +919,7 @@ function computeAvgPct(rows){
   });
   return sumTotal>0?(sumScore/sumTotal*100):null;
 }
+
 function getResultsForStudent(ex,reg){
   const resData=DS.results;
   const rrc=resData.headers.find(h=>/regno/i.test(h))||resData.headers[0]||'';
@@ -945,6 +931,7 @@ function getResultsForStudent(ex,reg){
     return true;
   });
 }
+
 /* ===== EXAM STUDENT RENDER ===== */
 function renderExamStudent(ex){
   const reg=ES[ex].sel;if(!reg) return;
@@ -978,11 +965,9 @@ function renderExamStudent(ex){
   ].filter(m=>m.v&&String(m.v).trim()&&String(m.v).trim()!=='–')
    .map(m=>`<span class="mchip"><i class="bi ${m.icon} me-1"></i>${esc(String(m.v))}</span>`)
    .join('');
-  // Render KPI section
+
   const kpiEl=document.getElementById(ex+'KPI');
   if(ex==='jee'){
-    // JEE: Mains group in one row, Advance group in one row
-    // Avg Marks % recalculated as sum(userscore)/sum(totalmarks) from the Results sheet
     const allRes=getResultsForStudent('jee',reg);
     const mainsRows=allRes.filter(r=>/mains/i.test(String(r.test_pattern||'')));
     const advRows=allRes.filter(r=>/adv/i.test(String(r.test_pattern||'')));
@@ -1002,6 +987,7 @@ function renderExamStudent(ex){
   } else {
     const cols=KPI_COLS[ex]||[];
     kpiEl.innerHTML=`<div class="kpi-group"><div class="krow">${cols.map((col,i)=>{
+      /* KEY FIX: use getKpiVal which does case-insensitive resolution */
       const val=getKpiVal(student,col,h);
       const vs=formatKpiVal(val,col);
       const lbl=KPI_LABELS[col]||col;
@@ -1011,16 +997,41 @@ function renderExamStudent(ex){
   ES[ex].page=1;
   renderPerfTable(ex);
 }
-/* ===== PERFORMANCE TABLE ===== */
+
+/* ===== PERFORMANCE TABLE =====
+   PERF_DEF cols are logical names; resolved against actual Results sheet headers at render time. */
 const PERF_DEF={
-  neet:{cols:['test_date','test_name','totalmarks','userscore','markspercent','AIR','physics_marks','chemistry_marks','botany_marks','zoology_marks','resultstatus'],
-        labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',AIR:'AIR',physics_marks:'Physics',chemistry_marks:'Chemistry',botany_marks:'Botany',zoology_marks:'Zoology',resultstatus:'Status'}},
-  jee:{cols:['test_date','test_name','test_pattern','paper_type','totalmarks','userscore','markspercent','AIR','physics_marks','chemistry_marks','maths_marks','resultstatus'],
-       labels:{test_date:'Date',test_name:'Test Name',test_pattern:'Pattern',paper_type:'Paper',totalmarks:'Total',userscore:'Score',markspercent:'%',AIR:'AIR',physics_marks:'Physics',chemistry_marks:'Chemistry',maths_marks:'Maths',resultstatus:'Status'}},
-  foundation:{cols:['test_date','test_name','totalmarks','userscore','markspercent','biology_marks','socialstudies_marks','english_marks','mat_marks','history_marks','civics_marks','geography_marks','science_marks','resultstatus'],
-              labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',biology_marks:'Biology',socialstudies_marks:'Soc Studies',english_marks:'English',mat_marks:'MAT',history_marks:'History',civics_marks:'Civics',geography_marks:'Geography',science_marks:'Science',resultstatus:'Status'}}
+  neet:{
+    cols:['test_date','test_name','totalmarks','userscore','markspercent','AIR','physics_marks','chemistry_marks','botany_marks','zoology_marks','resultstatus'],
+    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',AIR:'AIR',physics_marks:'Physics',chemistry_marks:'Chemistry',botany_marks:'Botany',zoology_marks:'Zoology',resultstatus:'Status'}
+  },
+  jee:{
+    cols:['test_date','test_name','test_pattern','paper_type','totalmarks','userscore','markspercent','AIR','physics_marks','chemistry_marks','maths_marks','resultstatus'],
+    labels:{test_date:'Date',test_name:'Test Name',test_pattern:'Pattern',paper_type:'Paper',totalmarks:'Total',userscore:'Score',markspercent:'%',AIR:'AIR',physics_marks:'Physics',chemistry_marks:'Chemistry',maths_marks:'Maths',resultstatus:'Status'}
+  },
+  foundation:{
+    cols:['test_date','test_name','totalmarks','userscore','markspercent','biology_marks','socialstudies_marks','english_marks','mat_marks','history_marks','civics_marks','geography_marks','science_marks','resultstatus'],
+    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',biology_marks:'Biology',socialstudies_marks:'Soc Studies',english_marks:'English',mat_marks:'MAT',history_marks:'History',civics_marks:'Civics',geography_marks:'Geography',science_marks:'Science',resultstatus:'Status'}
+  }
 };
 const STREAM_MAP={neet:'NEET',jee:'JEE',foundation:'BOARD_EXAM'};
+
+/* KEY FIX: build a resolved column map for the Results sheet once per call.
+   Maps each logical PERF_DEF col -> actual header in DS.results.headers. */
+function buildPerfColMap(ex){
+  const resHeaders=DS.results.headers;
+  const def=PERF_DEF[ex]||{cols:[]};
+  const map={};
+  def.cols.forEach(col=>{
+    // Exact match first
+    if(resHeaders.includes(col)){map[col]=col;return;}
+    // Case-insensitive + strip spaces/underscores
+    const real=resolveCol(resHeaders, col);
+    if(real) map[col]=real;
+  });
+  return map;
+}
+
 function renderPerfTable(ex){
   const st=ES[ex];
   const reg=st.sel;
@@ -1028,6 +1039,7 @@ function renderPerfTable(ex){
   const rrc=resData.headers.find(h=>/regno/i.test(h))||resData.headers[0]||'';
   const streamCol=resData.headers.find(h=>/^stream$/i.test(h))||'';
   const streamFilter=STREAM_MAP[ex];
+
   let rows=resData.rows.filter(r=>{
     if(String(r[rrc]||'').trim()!==reg) return false;
     if(streamFilter&&streamCol){
@@ -1035,8 +1047,10 @@ function renderPerfTable(ex){
     }
     return true;
   });
+
   const q=(document.getElementById(ex+'TS')?.value||'').toLowerCase();
   if(q) rows=rows.filter(r=>Object.values(r).join(' ').toLowerCase().includes(q));
+
   if(st.sc){
     rows.sort((a,b)=>{
       const va=String(a[st.sc]||''),vb=String(b[st.sc]||'');
@@ -1047,15 +1061,23 @@ function renderPerfTable(ex){
   st.pf=rows;
   renderStatsBar(ex,rows);
   renderLatestCard(ex,rows);
+
   const def=PERF_DEF[ex]||{cols:[],labels:{}};
-  const showCols=def.cols.filter(c=>resData.headers.includes(c));
+  /* KEY FIX: resolve logical col names to actual sheet headers */
+  const colMap=buildPerfColMap(ex);
+  // Only show cols that exist in the sheet
+  const showLogical=def.cols.filter(c=>colMap[c]);
+
   const headEl=document.getElementById(ex+'PH2');
   if(headEl){
-    headEl.innerHTML='<tr>'+showCols.map(h=>{
-      const act=st.sc===h;const ic=act?(st.sd==='asc'?'↑':'↓'):'⇅';
-      return`<th class="${act?'sa':''}" onclick="pfSort('${ex}','${esc(h)}')">${def.labels[h]||h} <span class="si">${ic}</span></th>`;
+    headEl.innerHTML='<tr>'+showLogical.map(logCol=>{
+      const realCol=colMap[logCol];
+      const act=st.sc===realCol;
+      const ic=act?(st.sd==='asc'?'↑':'↓'):'⇅';
+      return`<th class="${act?'sa':''}" onclick="pfSort('${ex}','${esc(realCol)}')">${def.labels[logCol]||logCol} <span class="si">${ic}</span></th>`;
     }).join('')+'</tr>';
   }
+
   const body=document.getElementById(ex+'PB');
   const empty=document.getElementById(ex+'PE');
   if(!rows.length){
@@ -1066,37 +1088,44 @@ function renderPerfTable(ex){
   if(empty) empty.style.display='none';
   const start=(st.page-1)*st.ps,end=start+st.ps;
   if(body){
-    body.innerHTML=rows.slice(start,end).map(row=>'<tr>'+showCols.map(h=>{
-      let v=String(row[h]??'');
-      if(h==='test_date'){return`<td><strong>${esc(fmtDate(v))}</strong></td>`;}
-      if(h==='resultstatus'){
+    body.innerHTML=rows.slice(start,end).map(row=>'<tr>'+showLogical.map(logCol=>{
+      const realCol=colMap[logCol];
+      let v=String(row[realCol]??'');
+      if(logCol==='test_date'){return`<td><strong>${esc(fmtDate(v))}</strong></td>`;}
+      if(logCol==='resultstatus'){
         const lv=v.toLowerCase();
         if(lv.includes('present')) return`<td><span class="bp">${esc(v)||'Present'}</span></td>`;
         if(lv.includes('absent')) return`<td><span class="bf">${esc(v)||'Absent'}</span></td>`;
         return`<td><span class="bo">${esc(v)||'–'}</span></td>`;
       }
-      if(h==='markspercent'&&v&&!isNaN(v)) v=parseFloat(v).toFixed(1)+'%';
+      if(logCol==='markspercent'&&v&&!isNaN(v)) v=parseFloat(v).toFixed(1)+'%';
       return`<td>${esc(v)||'<span style="color:var(--gray-300)">–</span>'}</td>`;
     }).join('')+'</tr>').join('');
   }
   renderPag(ex+'PPB',rows.length,st.page,st.ps,p=>{ES[ex].page=p;renderPerfTable(ex);});
 }
+
 /* ===== STATS BAR ===== */
-// Avg Marks % computed as sum(userscore)/sum(totalmarks) × 100
 function renderStatsBar(ex,rows){
   const bar=document.getElementById(ex+'StatsBar');
   if(!bar) return;
   const total=rows.length;
-  const present=rows.filter(r=>String(r.resultstatus||'').toLowerCase().includes('present')).length;
-  // sum(userscore) / sum(totalmarks) × 100
-  let sumScore=0, sumTotal=0;
+  // Resolve resultstatus column
+  const resHeaders=DS.results.headers;
+  const rsCol=resolveCol(resHeaders,'resultstatus')||'resultstatus';
+  const usCol=resolveCol(resHeaders,'userscore')||'userscore';
+  const tmCol=resolveCol(resHeaders,'totalmarks')||'totalmarks';
+  const airCol=resolveCol(resHeaders,'AIR')||'AIR';
+
+  const present=rows.filter(r=>String(r[rsCol]||'').toLowerCase().includes('present')).length;
+  let sumScore=0,sumTotal=0;
   rows.forEach(r=>{
-    const sc=parseFloat(r.userscore||'');
-    const tm=parseFloat(r.totalmarks||'');
+    const sc=parseFloat(r[usCol]||'');
+    const tm=parseFloat(r[tmCol]||'');
     if(!isNaN(sc)&&!isNaN(tm)&&tm>0){sumScore+=sc;sumTotal+=tm;}
   });
   const avgPct=sumTotal>0?(sumScore/sumTotal*100):null;
-  const airs=rows.map(r=>parseInt(r.AIR||'')).filter(v=>!isNaN(v));
+  const airs=rows.map(r=>parseInt(r[airCol]||'')).filter(v=>!isNaN(v));
   const bestAIR=airs.length?Math.min(...airs):null;
   const stat=(icon,color,val,lbl)=>`
     <div class="tstat">
@@ -1109,32 +1138,45 @@ function renderStatsBar(ex,rows){
     (avgPct!==null?stat('graph-up','#f59e0b',avgPct.toFixed(1)+'%','Avg Marks %'):'')+
     (bestAIR!==null?stat('trophy','#a78bfa',bestAIR,'Best AIR'):'');
 }
+
 /* ===== LATEST TEST CARD ===== */
 function renderLatestCard(ex,rows){
   const card=document.getElementById(ex+'Latest');
   if(!card) return;
   if(!rows.length){card.classList.remove('vis');return;}
+  const resHeaders=DS.results.headers;
+  const tdCol=resolveCol(resHeaders,'test_date')||'test_date';
+  const tnCol=resolveCol(resHeaders,'test_name')||'test_name';
+  const tmCol=resolveCol(resHeaders,'totalmarks')||'totalmarks';
+  const usCol=resolveCol(resHeaders,'userscore')||'userscore';
+  const mpCol=resolveCol(resHeaders,'markspercent')||'markspercent';
+  const airCol=resolveCol(resHeaders,'AIR')||'AIR';
+  const rsCol=resolveCol(resHeaders,'resultstatus')||'resultstatus';
+
   const sorted=[...rows].sort((a,b)=>{
-    const da=new Date(a.test_date||0),db=new Date(b.test_date||0);
+    const da=new Date(a[tdCol]||0),db=new Date(b[tdCol]||0);
     return db-da;
   });
   const r=sorted[0];
   card.classList.add('vis');
-  document.getElementById(ex+'LatestName').textContent=r.test_name||'–';
+  document.getElementById(ex+'LatestName').textContent=r[tnCol]||'–';
+  const pmp=r[mpCol];
   const pills=[
-    r.test_date?fmtDate(r.test_date):null,
-    r.totalmarks?'Total: '+r.totalmarks:null,
-    r.userscore?'Score: '+r.userscore:null,
-    r.markspercent&&!isNaN(r.markspercent)?parseFloat(r.markspercent).toFixed(1)+'%':null,
-    r.AIR?'AIR: '+r.AIR:null,
-    r.resultstatus||null
+    r[tdCol]?fmtDate(r[tdCol]):null,
+    r[tmCol]?'Total: '+r[tmCol]:null,
+    r[usCol]?'Score: '+r[usCol]:null,
+    pmp&&!isNaN(pmp)?parseFloat(pmp).toFixed(1)+'%':null,
+    r[airCol]?'AIR: '+r[airCol]:null,
+    r[rsCol]||null
   ].filter(Boolean);
   document.getElementById(ex+'LatestPills').innerHTML=pills.map(p=>`<span class="lc-pill">${esc(p)}</span>`).join('');
 }
+
 function applyPF(ex){ES[ex].page=1;renderPerfTable(ex);}
 function pfSz(ex){ES[ex].ps=+document.getElementById(ex+'SZ').value;ES[ex].page=1;renderPerfTable(ex);}
 function pfSort(ex,col){const st=ES[ex];st.sc===col?(st.sd=st.sd==='asc'?'desc':'asc'):(st.sc=col,st.sd='asc');renderPerfTable(ex);}
-/* ===== EXPORT RAW STUDENT LIST ===== */
+
+/* ===== EXPORT RAW ===== */
 function exportRaw(fmt){
   const data=RS.filtered;
   if(!data.length){showToast('No students to export','error');return;}
@@ -1166,26 +1208,29 @@ function exportRaw(fmt){
     showToast('Excel downloaded!','success');
   }
 }
-/* ===== EXPORT ===== */
+
+/* ===== EXPORT PERFORMANCE ===== */
 function exportD(ex,fmt){
   const data=ES[ex].pf;
   if(!data.length){showToast('No data to export','error');return;}
   const reg=ES[ex].sel||ex;
+  const colMap=buildPerfColMap(ex);
   const def=PERF_DEF[ex]||{cols:[]};
-  const exportHeaders=def.cols.filter(c=>DS.results.headers.includes(c));
+  const exportLogical=def.cols.filter(c=>colMap[c]);
   if(fmt==='csv'){
-    const lines=[exportHeaders.join(','),...data.map(r=>exportHeaders.map(h=>`"${String(r[h]??'').replace(/"/g,'""')}"`).join(','))];
+    const lines=[exportLogical.map(c=>def.labels[c]||c).join(','),...data.map(r=>exportLogical.map(lc=>`"${String(r[colMap[lc]]??'').replace(/"/g,'""')}"`).join(','))];
     const blob=new Blob([lines.join('\n')],{type:'text/csv'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${ex}_${reg}.csv`;a.click();URL.revokeObjectURL(a.href);
     showToast('CSV downloaded!','success');
   }else{
-    const exportData=data.map(r=>{const o={};exportHeaders.forEach(h=>{o[h]=r[h]??'';});return o;});
+    const exportData=data.map(r=>{const o={};exportLogical.forEach(lc=>{o[def.labels[lc]||lc]=r[colMap[lc]]??'';});return o;});
     const ws=XLSX.utils.json_to_sheet(exportData);
     const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Results');
     XLSX.writeFile(wb,`${ex}_${reg}.xlsx`);
     showToast('Excel downloaded!','success');
   }
 }
+
 /* ===== PAGINATION ===== */
 function renderPag(cid,total,current,size,onPage){
   const el=document.getElementById(cid);if(!el) return;
@@ -1200,6 +1245,7 @@ function renderPag(cid,total,current,size,onPage){
   h+=btn('›',current<tp?current+1:null);
   el.innerHTML=h;
 }
+
 /* ===== TAB SWITCH ===== */
 function switchTab(tab){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1207,6 +1253,7 @@ function switchTab(tab){
   document.getElementById('page-'+tab).classList.add('active');
   document.getElementById('tab-'+tab).classList.add('active');
 }
+
 /* ===== TOAST ===== */
 function showToast(msg,type='info'){
   const icons={success:'bi-check-circle-fill',error:'bi-exclamation-triangle-fill',info:'bi-info-circle-fill'};
@@ -1216,9 +1263,11 @@ function showToast(msg,type='info'){
   document.getElementById('toastC').appendChild(d);
   setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity .3s';setTimeout(()=>d.remove(),300);},3500);
 }
+
 /* ===== UTILS ===== */
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function escAttr(s){return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+
 /* ===== INIT ===== */
 document.addEventListener('DOMContentLoaded',()=>{
   loadAll();
