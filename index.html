@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>PW Free Enrollments</title>
+<title>PW Analytics — AY26-27 Free Enrollments</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Cpath d='M6 22 L16 9 L26 22' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10 22 L16 14 L22 22' stroke='white' stroke-width='2' fill='%23a5b4fc' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -36,9 +37,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .brand-txt small{display:block;font-size:8px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text3);font-family:var(--sans);margin-top:1px}
 .nav-sep{width:1px;height:22px;background:var(--border2);flex-shrink:0;margin:0 4px}
 .tabs{display:flex;gap:2px}
-.tab{display:flex;align-items:center;gap:6px;padding:5px 12px;border:none;background:transparent;border-radius:var(--r8);font-family:var(--sans);font-weight:500;font-size:12px;color:var(--text3);cursor:pointer;transition:all .15s;white-space:nowrap;}
-.tab:hover{background:var(--surface2);color:var(--text2)}
-.tab.active{background:var(--indigo-dim);color:#a5b4fc;font-weight:600;box-shadow:0 0 0 1px #6366f130}
+.tab{display:flex;align-items:center;gap:6px;padding:5px 12px;border:none;background:transparent;border-radius:var(--r8);font-family:var(--sans);font-weight:600;font-size:12px;color:#8896b0;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tab:hover{background:var(--surface2);color:#c8d4e8}
+.tab.active{background:var(--indigo-dim);color:#dde5ff;font-weight:700;box-shadow:0 0 0 1px #6366f145}
 .tab i{font-size:13px}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .upd-lbl{font-size:10.5px;color:var(--text3);font-family:var(--mono);white-space:nowrap}
@@ -135,19 +136,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 /* ── DATA TABLE — FULLY FIXED ── */
 table.dt{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
 table.dt thead{position:sticky;top:0;z-index:10}
-table.dt thead tr{background:var(--surface3);border-bottom:2px solid var(--border2)}
+table.dt thead tr{background:#1a2038;border-bottom:2px solid #2e3d6a}
 table.dt thead th{
   padding:11px 14px;
-  font-weight:700;color:var(--text2);
+  font-weight:700;color:#c8d4e8;
   white-space:nowrap;cursor:pointer;user-select:none;
   transition:background .15s;text-align:left;
   font-size:11px;letter-spacing:.6px;text-transform:uppercase;
   font-family:var(--sans);
 }
-table.dt thead th:hover{background:var(--surface2);color:var(--text)}
-table.dt thead th.sa{color:#c7d2fe;background:rgba(99,102,241,.18)}
-.si{font-size:9px;margin-left:3px;opacity:.5}
-table.dt thead th.sa .si{opacity:1;color:#c7d2fe}
+table.dt thead th:hover{background:#1e2a4a;color:#e8f0ff}
+table.dt thead th.sa{color:#dde5ff;background:rgba(99,102,241,.25)}
+.si{font-size:9px;margin-left:3px;opacity:.6}
+table.dt thead th.sa .si{opacity:1;color:#dde5ff}
 table.dt tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
 table.dt tbody tr:last-child{border-bottom:none}
 table.dt tbody tr:hover{background:var(--surface2)}
@@ -313,7 +314,7 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 <nav class="nav">
   <a class="brand" href="#">
     <div class="brand-logo"><i class="bi bi-mortarboard-fill"></i></div>
-    <div class="brand-txt">PW Analytics<small>Free Enrollments</small></div>
+    <div class="brand-txt">PW Analytics<small>AY26-27 Free Enrollments</small></div>
   </a>
   <div class="nav-sep"></div>
   <div class="tabs">
@@ -333,7 +334,7 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
   <div class="ph">
     <div class="ph-line"></div><div class="ph-glow"></div>
     <h1><i class="bi bi-people-fill" style="color:var(--indigo);margin-right:8px"></i>Students Dashboard</h1>
-    <p>All enrolled students — live from Google Sheets</p>
+    <p>AY 2026–27 Free Enrollments — live from Google Sheets</p>
     <div class="ph-pills">
       <div class="ph-pill"><i class="bi bi-person-check-fill" style="color:var(--green)"></i><span id="rawTotal">Loading…</span></div>
     </div>
@@ -875,9 +876,11 @@ function getKpiVal(student,col,headers){
   return undefined;
 }
 function formatKpiVal(val,col){
-  let vs=String(val??'–');
-  if(vs===''||vs==='undefined'||vs==='null') vs='–';
-  if(/exam_attn%|attn\s%|mains_attn|adv_attn|avg_marks%|avg_mains_marks|avg_adv_marks/i.test(col)&&vs!=='–'&&vs!=='-'&&!isNaN(vs)){
+  if(val===null||val===undefined) return '–';
+  let vs=String(val);
+  if(vs===''||vs==='undefined'||vs==='null') return '–';
+  // percentage columns — widen match to include all *Marks%* and *Attn%* variants
+  if(/attn%|attn\s%|marks%|markspercent/i.test(col)&&vs!=='–'&&!isNaN(vs)){
     const n=parseFloat(vs);vs=(n>0&&n<=1?(n*100).toFixed(1):n.toFixed(1))+'%';
   } else if(vs!=='–'&&!isNaN(vs)&&String(vs).includes('.')){vs=parseFloat(vs).toFixed(2);}
   return vs;
@@ -928,8 +931,13 @@ function computeExamKPIsFromResults(resultsRows,resHeaders){
 }
 
 function computeAvgPct(rows){
+  // resolve column names flexibly
+  if(!rows.length) return null;
+  const sampleKeys=Object.keys(rows[0]);
+  const usKey=sampleKeys.find(k=>/userscore/i.test(k))||'userscore';
+  const tmKey=sampleKeys.find(k=>/totalmarks/i.test(k))||'totalmarks';
   let sumScore=0,sumTotal=0;
-  rows.forEach(r=>{const sc=parseFloat(r.userscore||''),tm=parseFloat(r.totalmarks||'');if(!isNaN(sc)&&!isNaN(tm)&&tm>0){sumScore+=sc;sumTotal+=tm;}});
+  rows.forEach(r=>{const sc=parseFloat(r[usKey]||''),tm=parseFloat(r[tmKey]||'');if(!isNaN(sc)&&!isNaN(tm)&&tm>0){sumScore+=sc;sumTotal+=tm;}});
   return sumTotal>0?(sumScore/sumTotal*100):null;
 }
 
@@ -1007,8 +1015,8 @@ const PERF_DEF={
     labels:{test_date:'Date',test_name:'Test Name',test_pattern:'Pattern',paper_type:'Paper',totalmarks:'Total',userscore:'Score',markspercent:'%',AIR:'AIR',physics_marks:'Physics',chemistry_marks:'Chemistry',maths_marks:'Maths',resultstatus:'Status'}
   },
   foundation:{
-    cols:['test_date','test_name','totalmarks','userscore','markspercent','physics_marks','chemistry_marks','maths_marks','biology_marks','socialstudies_marks','english_marks','mat_marks','history_marks','civics_marks','geography_marks','science_marks','resultstatus'],
-    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',physics_marks:'Physics',chemistry_marks:'Chemistry',maths_marks:'Maths',biology_marks:'Biology',socialstudies_marks:'Soc Studies',english_marks:'English',mat_marks:'MAT',history_marks:'History',civics_marks:'Civics',geography_marks:'Geography',science_marks:'Science',resultstatus:'Status'}
+    cols:['test_date','test_name','totalmarks','userscore','markspercent','resultstatus'],
+    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',resultstatus:'Status'}
   }
 };
 
