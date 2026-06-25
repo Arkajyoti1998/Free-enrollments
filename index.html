@@ -22,7 +22,6 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased}
-
 /* ── NAV ── */
 .nav{
   position:sticky;top:0;z-index:1000;height:54px;
@@ -47,10 +46,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .rfbtn:hover{border-color:var(--indigo);color:#a5b4fc;background:var(--indigo-dim)}
 .rfbtn.spinning i{animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 /* ── PAGES ── */
 .page{display:none}.page.active{display:block}
-
 /* ── PAGE HEADER ── */
 .ph{padding:24px 24px 20px;border-bottom:1px solid var(--border);background:var(--surface);position:relative;overflow:hidden;}
 .ph-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--indigo),var(--cyan),var(--violet))}
@@ -59,7 +56,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .ph p{font-size:11.5px;color:var(--text3);margin-top:3px;position:relative;font-weight:400}
 .ph-pills{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;position:relative}
 .ph-pill{display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);border-radius:99px;padding:3px 11px;font-size:11px;font-weight:600;color:var(--text2);}
-
 /* ── SUB-TABS (within Students page) ── */
 .subtabs-bar{
   background:var(--surface);border-bottom:1px solid var(--border);
@@ -77,7 +73,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .subtab.active{color:#a5b4fc;border-bottom-color:var(--indigo);font-weight:600;}
 .subtab i{font-size:13px}
 .subpage{display:none}.subpage.active{display:block}
-
 /* ── FILTER BAR ── */
 .fbar{background:var(--surface);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;position:sticky;top:101px;z-index:890;}
 .sw{position:relative;flex:1;min-width:150px;max-width:220px}
@@ -90,7 +85,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .fsel option{background:var(--surface2);color:var(--text)}
 .clrbtn{padding:5px 11px;border:1px solid var(--border2);background:var(--surface2);border-radius:var(--r8);font-size:11.5px;font-weight:500;color:var(--text3);cursor:pointer;transition:all .15s;white-space:nowrap;font-family:var(--sans);}
 .clrbtn:hover{border-color:var(--red);color:var(--red);background:rgba(244,63,94,.08)}
-
 /* ── SUMMARY DASHBOARD ── */
 .summary-page{padding:20px 24px;display:flex;flex-direction:column;gap:20px}
 .kpi-hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
@@ -122,7 +116,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .chart-wrap{position:relative;height:220px}
 .chart-wrap.tall{height:280px}
 .sum-export-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
-
 /* ── TABLE SECTION ── */
 .tsec{padding:18px 20px}
 .tcard{background:var(--surface);border-radius:var(--r16);border:1px solid var(--border);overflow:hidden;}
@@ -132,18 +125,15 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .tw{overflow-x:auto;max-height:calc(100vh - 260px)}
 .tw::-webkit-scrollbar{height:3px;width:3px}
 .tw::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
-
-/* ── DATA TABLE — FULLY FIXED ── */
+/* ── DATA TABLE ── */
 table.dt{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
 table.dt thead{position:sticky;top:0;z-index:10}
 table.dt thead tr{background:#1a2038;border-bottom:2px solid #2e3d6a}
 table.dt thead th{
-  padding:11px 14px;
-  font-weight:700;color:#c8d4e8;
+  padding:11px 14px;font-weight:700;color:#c8d4e8;
   white-space:nowrap;cursor:pointer;user-select:none;
   transition:background .15s;text-align:left;
-  font-size:11px;letter-spacing:.6px;text-transform:uppercase;
-  font-family:var(--sans);
+  font-size:11px;letter-spacing:.6px;text-transform:uppercase;font-family:var(--sans);
 }
 table.dt thead th:hover{background:#1e2a4a;color:#e8f0ff}
 table.dt thead th.sa{color:#dde5ff;background:rgba(99,102,241,.25)}
@@ -153,15 +143,10 @@ table.dt tbody tr{border-bottom:1px solid var(--border);transition:background .1
 table.dt tbody tr:last-child{border-bottom:none}
 table.dt tbody tr:hover{background:var(--surface2)}
 table.dt tbody td{
-  padding:10px 14px;
-  color:var(--text);
-  white-space:nowrap;
-  max-width:240px;overflow:hidden;text-overflow:ellipsis;
-  font-size:13px;
-  line-height:1.4;
+  padding:10px 14px;color:var(--text);white-space:nowrap;
+  max-width:240px;overflow:hidden;text-overflow:ellipsis;font-size:13px;line-height:1.4;
 }
 table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12px}
-
 /* ── PAGINATION ── */
 .pbar{padding:9px 14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;background:var(--surface2);}
 .psz{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);font-weight:500}
@@ -171,7 +156,6 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 .pgb:hover:not(:disabled){border-color:var(--indigo);color:#a5b4fc;background:var(--indigo-dim)}
 .pgb.active{border-color:var(--indigo);background:var(--indigo);color:#fff}
 .pgb:disabled{opacity:.25;cursor:default}
-
 /* ── EXAM LAYOUT ── */
 .exlay{display:flex;min-height:calc(100vh - 54px)}
 .exsb{width:240px;background:var(--surface);border-right:1px solid var(--border);padding:12px 10px;position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto;flex-shrink:0;}
@@ -192,7 +176,6 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 .ritem:hover{background:var(--surface3);color:var(--text);padding-left:14px}
 .ritem.selected{background:var(--indigo-dim);color:#a5b4fc;font-weight:600;border-left:2px solid var(--indigo)}
 .exmain{flex:1;padding:18px 20px;overflow-x:hidden;background:var(--bg);min-width:0}
-
 /* ── STUDENT CARD ── */
 .sumcard{border-radius:var(--r20);padding:20px 22px;color:#fff;margin-bottom:14px;display:none;position:relative;overflow:hidden;background:linear-gradient(135deg,#1e1b4b 0%,#1a1f35 50%,#0f172a 100%);border:1px solid rgba(99,102,241,.25);box-shadow:0 0 0 1px rgba(99,102,241,.1),0 20px 60px rgba(0,0,0,.4),var(--indigo-glow);}
 .sumcard-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--indigo),var(--cyan),var(--violet))}
@@ -202,26 +185,15 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 .srid{font-size:11px;opacity:.45;position:relative;z-index:1;font-weight:400;font-family:var(--mono);letter-spacing:.2px}
 .smeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px;position:relative;z-index:1}
 .mchip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:4px 11px;font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:5px;}
-
-/* ── KPI CARDS — FIXED ── */
+/* ── KPI CARDS ── */
 .kpi-group{margin-bottom:14px}
-.kpi-group-header{
-  font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
-  color:var(--text2);margin:0 0 10px;display:flex;align-items:center;gap:8px;
-}
+.kpi-group-header{font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--text2);margin:0 0 10px;display:flex;align-items:center;gap:8px;}
 .kpi-group-header i{color:var(--indigo);font-size:13px}
 .kpi-group-header::after{content:'';flex:1;height:1px;background:var(--border)}
 .krow{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;flex-wrap:wrap}
 .krow::-webkit-scrollbar{height:3px}
 .krow::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
-.kcard{
-  background:var(--surface2);
-  border-radius:var(--r12);padding:14px 16px;
-  border:1px solid var(--border2);
-  transition:transform .18s,box-shadow .18s,border-color .18s;
-  cursor:default;position:relative;overflow:hidden;
-  flex:1;min-width:120px;max-width:180px;
-}
+.kcard{background:var(--surface2);border-radius:var(--r12);padding:14px 16px;border:1px solid var(--border2);transition:transform .18s,box-shadow .18s,border-color .18s;cursor:default;position:relative;overflow:hidden;flex:1;min-width:120px;max-width:180px;}
 .kcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r12) var(--r12) 0 0;}
 .kcard:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);border-color:var(--border2)}
 .kcard.c1::before{background:var(--indigo)}.kcard.c2::before{background:var(--cyan)}.kcard.c3::before{background:var(--green)}
@@ -229,22 +201,14 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 .kcard.c7::before{background:var(--indigo)}.kcard.c8::before{background:var(--cyan)}.kcard.c9::before{background:var(--green)}
 .kcard.c10::before{background:var(--amber)}.kcard.c11::before{background:var(--violet)}.kcard.c12::before{background:var(--red)}
 .kcard.c13::before{background:var(--indigo)}.kcard.c14::before{background:var(--cyan)}
-/* KPI label — fully readable */
-.ktit{
-  font-size:10px;font-weight:700;color:var(--text2);
-  text-transform:uppercase;letter-spacing:.6px;
-  margin-bottom:8px;white-space:nowrap;
-  font-family:var(--sans);line-height:1.3;
-}
+.ktit{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;white-space:nowrap;font-family:var(--sans);line-height:1.3;}
 .kval{font-family:var(--mono);font-size:22px;font-weight:500;color:var(--text);line-height:1;letter-spacing:-.3px}
-
 /* ── STATS BAR ── */
 .tstat-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .tstat{background:var(--surface);border-radius:var(--r12);padding:12px 14px;border:1px solid var(--border);display:flex;align-items:center;gap:10px;flex:1;min-width:130px;}
 .tstat-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .tstat-txt .tv{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--text);line-height:1;letter-spacing:-.2px}
 .tstat-txt .tl{font-size:9px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
-
 /* ── LATEST TEST ── */
 .latest-card{border-radius:var(--r16);padding:14px 18px;color:#fff;margin-bottom:12px;display:none;background:linear-gradient(135deg,#312e81 0%,#4c1d95 100%);border:1px solid rgba(167,139,250,.2);box-shadow:0 8px 28px rgba(79,46,229,.2);position:relative;overflow:hidden;}
 .latest-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#a78bfa,#818cf8)}
@@ -253,23 +217,19 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 .lc-name{font-family:var(--display);font-size:15px;font-weight:800;margin-bottom:7px}
 .lc-pills{display:flex;flex-wrap:wrap;gap:5px}
 .lc-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.18);padding:3px 10px;border-radius:99px;font-size:10px;font-weight:600;font-family:var(--mono)}
-
 /* ── SECTION TITLE ── */
 .stit{font-family:var(--display);font-size:13px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:7px;letter-spacing:-.1px}
 .stit i{color:var(--indigo)}
-
 /* ── EXPORT BUTTONS ── */
 .expbtn{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:var(--r8);font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:all .15s;white-space:nowrap;font-family:var(--sans);}
 .expbtn.csv{border-color:rgba(16,185,129,.35);color:var(--green);background:rgba(16,185,129,.08)}
 .expbtn.csv:hover{background:var(--green);color:#fff;border-color:var(--green)}
 .expbtn.excel{border-color:rgba(16,185,129,.35);color:#34d399;background:rgba(16,185,129,.06)}
 .expbtn.excel:hover{background:#059669;color:#fff;border-color:#059669}
-
 /* ── BADGES ── */
 .bp{background:rgba(16,185,129,.15);color:#34d399;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700;border:1px solid rgba(16,185,129,.2);font-family:var(--mono);display:inline-block}
 .bf{background:rgba(244,63,94,.12);color:#fb7185;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700;border:1px solid rgba(244,63,94,.2);font-family:var(--mono);display:inline-block}
 .bo{background:rgba(245,158,11,.12);color:#fbbf24;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700;border:1px solid rgba(245,158,11,.2);font-family:var(--mono);display:inline-block}
-
 /* ── ATTENDANCE BAR ── */
 .attn-bar{display:inline-flex;align-items:center;gap:8px;width:100%;min-width:120px}
 .attn-track{flex:1;height:5px;background:var(--surface3);border-radius:99px;min-width:40px}
@@ -278,19 +238,16 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 .att-m{color:var(--amber);font-weight:700;font-family:var(--mono);font-size:12px}
 .att-l{color:#fb7185;font-weight:700;font-family:var(--mono);font-size:12px}
 .att-na{color:var(--text3)}
-
 /* ── PLACEHOLDER ── */
 .pholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;text-align:center;background:var(--surface);border-radius:var(--r20);border:1px dashed var(--border2);}
 .pholder i{font-size:40px;color:var(--text3);margin-bottom:12px;opacity:.5}
 .pholder p{font-size:13px;color:var(--text3);font-weight:500}
-
 /* ── LOADING / EMPTY ── */
 .lst{padding:48px 20px;text-align:center;color:var(--text3)}
 .spr{width:32px;height:32px;border:2.5px solid var(--border2);border-top-color:var(--indigo);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px}
 .empty{padding:48px 20px;text-align:center;color:var(--text3);display:flex;flex-direction:column;align-items:center;gap:6px}
 .empty i{font-size:36px;opacity:.3}
 .empty p{font-size:13px}
-
 /* ── TOASTS ── */
 .toast-c{position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:5px}
 .tmsg{background:var(--surface2);color:var(--text);padding:10px 14px;border-radius:var(--r12);font-size:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);animation:slideIn .2s ease;display:flex;align-items:center;gap:8px;max-width:300px;font-weight:500;border:1px solid var(--border2);}
@@ -298,7 +255,6 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 .tmsg.error{background:#4c0519;border-color:#881337;color:#fb7185}
 .tmsg.info{background:var(--surface3);border-color:var(--indigo)}
 @keyframes slideIn{from{transform:translateX(16px);opacity:0}to{transform:translateX(0);opacity:1}}
-
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .exlay{flex-direction:column}
@@ -312,9 +268,12 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 </head>
 <body>
 <nav class="nav">
+  <!-- CHANGE 1: Removed "PW Analytics" text; logo enlarged & more glowing -->
   <a class="brand" href="#">
-    <div class="brand-logo"><i class="bi bi-mortarboard-fill"></i></div>
-    <div class="brand-txt">PW Analytics<small>AY26-27 Free Enrollments</small></div>
+    <div class="brand-logo" style="width:42px;height:42px;border-radius:13px;font-size:21px;flex-shrink:0;box-shadow:0 0 0 2px rgba(99,102,241,.55),0 0 24px #6366f180,0 0 48px #6366f130;"><i class="bi bi-mortarboard-fill"></i></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:2px;">
+      <span style="font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#8898b8;font-family:var(--sans);white-space:nowrap;">AY 26-27 · Free Enrollments</span>
+    </div>
   </a>
   <div class="nav-sep"></div>
   <div class="tabs">
@@ -328,8 +287,7 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
     <button class="rfbtn" id="rfbtn" onclick="loadAll()"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
   </div>
 </nav>
-
-<!-- ── STUDENTS PAGE (split into Summary + List) ── -->
+<!-- ── STUDENTS PAGE ── -->
 <div class="page active" id="page-raw">
   <div class="ph">
     <div class="ph-line"></div><div class="ph-glow"></div>
@@ -339,17 +297,13 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
       <div class="ph-pill"><i class="bi bi-person-check-fill" style="color:var(--green)"></i><span id="rawTotal">Loading…</span></div>
     </div>
   </div>
-
-  <!-- Sub-tab bar -->
   <div class="subtabs-bar">
     <button class="subtab active" id="stab-summary" onclick="switchSubTab('summary')"><i class="bi bi-grid-1x2-fill"></i>Summary</button>
     <button class="subtab" id="stab-list" onclick="switchSubTab('list')"><i class="bi bi-table"></i>Students List</button>
   </div>
-
   <!-- SUMMARY sub-page -->
   <div class="subpage active" id="subpage-summary">
     <div class="summary-page">
-      <!-- KPI Hero Row -->
       <div class="kpi-hero" id="sumHeroCards">
         <div class="hero-card hc-indigo"><div class="hero-icon"><i class="bi bi-people-fill"></i></div><div class="hero-val" id="sh-total">–</div><div class="hero-lbl">Total Students</div></div>
         <div class="hero-card hc-cyan"><div class="hero-icon"><i class="bi bi-building"></i></div><div class="hero-val" id="sh-centers">–</div><div class="hero-lbl">Active Centers</div></div>
@@ -358,12 +312,20 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
         <div class="hero-card hc-violet"><div class="hero-icon"><i class="bi bi-book-half"></i></div><div class="hero-val" id="sh-courses">–</div><div class="hero-lbl">Courses</div></div>
         <div class="hero-card hc-red"><div class="hero-icon"><i class="bi bi-layers-fill"></i></div><div class="hero-val" id="sh-batches">–</div><div class="hero-lbl">Batches</div></div>
       </div>
-      <!-- Export row -->
-      <div class="sum-export-row">
-        <button class="expbtn csv" onclick="exportRaw('csv')"><i class="bi bi-filetype-csv"></i>Export CSV</button>
-        <button class="expbtn excel" onclick="exportRaw('xlsx')"><i class="bi bi-file-earmark-excel"></i>Export Excel</button>
+
+      <!-- CHANGE 4: Center filter + export row combined -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r12);padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <label style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;white-space:nowrap;display:flex;align-items:center;gap:5px;"><i class="bi bi-building" style="color:var(--indigo);font-size:13px;"></i>Center</label>
+          <select class="fsel" id="sumCenterF" onchange="sumCenterFilter()" style="min-width:170px;"><option value="">All Centers</option></select>
+          <button class="clrbtn" onclick="sumCenterClear()"><i class="bi bi-x-circle"></i> Clear</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="expbtn csv" onclick="exportRaw('csv')"><i class="bi bi-filetype-csv"></i>Export CSV</button>
+          <button class="expbtn excel" onclick="exportRaw('xlsx')"><i class="bi bi-file-earmark-excel"></i>Export Excel</button>
+        </div>
       </div>
-      <!-- Charts -->
+
       <div class="charts-grid">
         <div class="chart-card">
           <div class="chart-title"><i class="bi bi-building"></i>Students by Center</div>
@@ -388,7 +350,6 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
       </div>
     </div>
   </div>
-
   <!-- STUDENTS LIST sub-page -->
   <div class="subpage" id="subpage-list">
     <div class="fbar">
@@ -422,7 +383,6 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
     </div>
   </div>
 </div>
-
 <!-- ── NEET ── -->
 <div class="page" id="page-neet">
   <div class="exlay">
@@ -458,7 +418,6 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
     </div>
   </div>
 </div>
-
 <!-- ── JEE ── -->
 <div class="page" id="page-jee">
   <div class="exlay">
@@ -494,7 +453,6 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
     </div>
   </div>
 </div>
-
 <!-- ── FOUNDATION ── -->
 <div class="page" id="page-foundation">
   <div class="exlay">
@@ -530,9 +488,7 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
     </div>
   </div>
 </div>
-
 <div class="toast-c" id="toastC"></div>
-
 <script>
 const API='https://script.google.com/macros/s/AKfycbzyo5Jfw2Et6s3Cnm1-ks43_jREQwpVX6MZPUaEfKSYURdbRiExt5VNV9RSByaDqzIM/exec';
 const DS={raw:{headers:[],rows:[]},neet:{headers:[],rows:[]},jee:{headers:[],rows:[]},foundation:{headers:[],rows:[]},results:{headers:[],rows:[]}};
@@ -540,8 +496,6 @@ const RS={filtered:[],page:1,ps:25,sc:null,sd:'asc',fc:'',cc:'',bc:'',stc:''};
 const ES={};
 ['neet','jee','foundation'].forEach(ex=>{ES[ex]={sel:null,pf:[],page:1,ps:10,sc:null,sd:'asc'};});
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-// Chart instances
 let chartInstances={};
 
 function fmtDate(v){
@@ -553,7 +507,6 @@ function fmtDate(v){
   if(isNaN(d?.getTime())) return s;
   return `${String(d.getDate()).padStart(2,'0')}-${MONTHS[d.getMonth()]}-${String(d.getFullYear()).slice(-2)}`;
 }
-
 async function fetchSheet(tab){
   const r=await fetch(`${API}?sheet=${encodeURIComponent(tab)}`,{redirect:'follow'});
   if(!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -563,7 +516,6 @@ async function fetchSheet(tab){
   const rows=(j.rows||[]).map(row=>{const o={};headers.forEach(h=>{o[h]=row[h]??'';});return o;}).filter(r=>Object.values(r).some(v=>String(v).trim()!==''));
   return{headers,rows};
 }
-
 async function loadAll(){
   spin(true);
   try{
@@ -584,13 +536,10 @@ async function loadAll(){
   }catch(e){showToast('Refresh failed: '+e.message,'error');}
   finally{spin(false);}
 }
-
 function spin(on){document.getElementById('rfbtn').classList.toggle('spinning',on);}
 function updateLbl(){document.getElementById('lbl').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
-
 const STREAM_KEYWORDS={neet:['neet'],jee:['jee'],foundation:['foundation','board_exam','board','found']};
 const DETECTED_STREAM_VALUES={neet:null,jee:null,foundation:null};
-
 function detectStreamValues(){
   const resHeaders=DS.results.headers;
   const streamCol=resHeaders.find(h=>/^stream$/i.test(h))||'';
@@ -602,7 +551,6 @@ function detectStreamValues(){
     DETECTED_STREAM_VALUES[ex]=matched.length?matched:null;
   });
 }
-
 function getResultsForStudent(ex,reg){
   const resData=DS.results;
   const rrc=resData.headers.find(h=>/regno/i.test(h))||resData.headers[0]||'';
@@ -614,7 +562,6 @@ function getResultsForStudent(ex,reg){
     return true;
   });
 }
-
 function buildHeaderMap(headers){const m={};headers.forEach(h=>{m[h.toLowerCase().replace(/[\s_]/g,'')]=h;});return m;}
 function resolveCol(headers,col){const key=col.toLowerCase().replace(/[\s_]/g,'');const m=buildHeaderMap(headers);return m[key]||null;}
 function getVal(row,headers,col){const real=resolveCol(headers,col);if(real) return row[real]??'';return '';}
@@ -630,15 +577,33 @@ function initRaw(){
   RAW_SHOW=[...RAW_SHOW_BASE];RAW_LABELS={...RAW_LABELS_BASE};
   if(TEST_ATT_COL){RAW_SHOW.push(TEST_ATT_COL);RAW_LABELS[TEST_ATT_COL]='Test Attendance';}
   fillSel('rawF1',RS.fc);fillSel('rawF2',RS.cc);fillSel('rawF3',RS.bc);fillSel('rawF4',RS.stc);
+  fillSumCenterSel(); // CHANGE 4: populate summary center filter
   document.getElementById('rawTotal').textContent=DS.raw.rows.length+' Total Students';
   rawApply();
 }
-
 function fillSel(id,col){
   const s=document.getElementById(id);while(s.options.length>1) s.remove(1);
   if(!col) return;
   [...new Set(DS.raw.rows.map(r=>String(r[col]||'')).filter(Boolean))].sort()
     .forEach(v=>{const o=document.createElement('option');o.value=o.textContent=v;s.appendChild(o);});
+}
+
+// CHANGE 4: Summary center filter helpers
+function fillSumCenterSel(){
+  const s=document.getElementById('sumCenterF');if(!s||!RS.fc) return;
+  const cur=s.value;while(s.options.length>1) s.remove(1);
+  [...new Set(DS.raw.rows.map(r=>String(r[RS.fc]||'')).filter(Boolean))].sort()
+    .forEach(v=>{const o=document.createElement('option');o.value=o.textContent=v;if(v===cur) o.selected=true;s.appendChild(o);});
+}
+function sumCenterFilter(){
+  const v=document.getElementById('sumCenterF').value;
+  document.getElementById('rawF1').value=v;
+  rawApply();
+}
+function sumCenterClear(){
+  document.getElementById('sumCenterF').value='';
+  document.getElementById('rawF1').value='';
+  rawApply();
 }
 
 function rawApply(){
@@ -656,8 +621,12 @@ function rawApply(){
   if(RS.sc){RS.filtered.sort((a,b)=>{const va=String(a[RS.sc]||''),vb=String(b[RS.sc]||'');const n=isNaN(va)||isNaN(vb)?va.localeCompare(vb):Number(va)-Number(vb);return RS.sd==='asc'?n:-n;});}
   RS.page=1;renderRaw();renderSummaryDashboard();
 }
-
-function rawClear(){document.getElementById('rawSearch').value='';['rawF1','rawF2','rawF3','rawF4'].forEach(id=>document.getElementById(id).value='');rawApply();}
+function rawClear(){
+  document.getElementById('rawSearch').value='';
+  ['rawF1','rawF2','rawF3','rawF4'].forEach(id=>document.getElementById(id).value='');
+  const sc=document.getElementById('sumCenterF');if(sc) sc.value='';
+  rawApply();
+}
 function rawSz(){RS.ps=+document.getElementById('rawPS').value;RS.page=1;renderRaw();}
 function rawSort(col){RS.sc===col?(RS.sd=RS.sd==='asc'?'desc':'asc'):(RS.sc=col,RS.sd='asc');rawApply();}
 
@@ -674,14 +643,11 @@ const CHART_DEFAULTS={
   scales:{x:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11,family:"'DM Sans',sans-serif"}}},
           y:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11,family:"'DM Sans',sans-serif"}}}}
 };
-
 function makeCountMap(rows,col){
   const m={};rows.forEach(r=>{const v=String(r[col]||'').trim()||'Unknown';m[v]=(m[v]||0)+1;});
   return Object.entries(m).sort((a,b)=>b[1]-a[1]);
 }
-
 function destroyChart(id){if(chartInstances[id]){chartInstances[id].destroy();delete chartInstances[id];}}
-
 function buildBarChart(canvasId,labels,values,color){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
@@ -691,7 +657,6 @@ function buildBarChart(canvasId,labels,values,color){
     options:{...JSON.parse(JSON.stringify(CHART_DEFAULTS)),plugins:{...JSON.parse(JSON.stringify(CHART_DEFAULTS.plugins))}}
   });
 }
-
 function buildHorizBarChart(canvasId,labels,values){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
@@ -703,7 +668,6 @@ function buildHorizBarChart(canvasId,labels,values){
       scales:{x:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}},y:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:11}}}}}
   });
 }
-
 function buildDoughnutChart(canvasId,labels,values){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
@@ -715,10 +679,8 @@ function buildDoughnutChart(canvasId,labels,values){
                tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}}}
   });
 }
-
 function renderSummaryDashboard(){
   const rows=RS.filtered,total=rows.length;
-  // Hero KPIs
   let sumAtt=0,cntAtt=0,sumAtt15=0,cntAtt15=0;
   rows.forEach(r=>{
     const v=parseFloat(r['overall_class_attn']);if(!isNaN(v)){sumAtt+=v;cntAtt++;}
@@ -733,35 +695,16 @@ function renderSummaryDashboard(){
   document.getElementById('sh-att15').textContent=cntAtt15?(sumAtt15/cntAtt15).toFixed(1)+'%':'–';
   document.getElementById('sh-courses').textContent=courseCount;
   document.getElementById('sh-batches').textContent=batchCount;
-
-  // Charts — only render if data exists
-  if(RS.fc){
-    const em=makeCountMap(rows,RS.fc).slice(0,12);
-    buildHorizBarChart('chartCenter',em.map(e=>e[0]),em.map(e=>e[1]));
-  }
-  if(RS.cc){
-    const em=makeCountMap(rows,RS.cc).slice(0,10);
-    buildBarChart('chartCourse',em.map(e=>e[0]),em.map(e=>e[1]),'#22d3ee');
-  }
-  if(RS.stc){
-    const em=makeCountMap(rows,RS.stc).slice(0,8);
-    buildDoughnutChart('chartStream',em.map(e=>e[0]),em.map(e=>e[1]));
-  }
-  if(RS.bc){
-    const em=makeCountMap(rows,RS.bc).slice(0,20);
-    buildBarChart('chartBatch',em.map(e=>e[0]),em.map(e=>e[1]),'#a78bfa');
-  }
-  // Attendance distribution buckets
+  if(RS.fc){const em=makeCountMap(rows,RS.fc).slice(0,12);buildHorizBarChart('chartCenter',em.map(e=>e[0]),em.map(e=>e[1]));}
+  if(RS.cc){const em=makeCountMap(rows,RS.cc).slice(0,10);buildBarChart('chartCourse',em.map(e=>e[0]),em.map(e=>e[1]),'#22d3ee');}
+  if(RS.stc){const em=makeCountMap(rows,RS.stc).slice(0,8);buildDoughnutChart('chartStream',em.map(e=>e[0]),em.map(e=>e[1]));}
+  if(RS.bc){const em=makeCountMap(rows,RS.bc).slice(0,20);buildBarChart('chartBatch',em.map(e=>e[0]),em.map(e=>e[1]),'#a78bfa');}
   const buckets={'< 40%':0,'40–59%':0,'60–74%':0,'75–89%':0,'≥ 90%':0};
   rows.forEach(r=>{
     let v=parseFloat(r['overall_class_attn']??'');
     if(isNaN(v)) return;
     if(v>0&&v<=1) v*=100;
-    if(v<40) buckets['< 40%']++;
-    else if(v<60) buckets['40–59%']++;
-    else if(v<75) buckets['60–74%']++;
-    else if(v<90) buckets['75–89%']++;
-    else buckets['≥ 90%']++;
+    if(v<40) buckets['< 40%']++;else if(v<60) buckets['40–59%']++;else if(v<75) buckets['60–74%']++;else if(v<90) buckets['75–89%']++;else buckets['≥ 90%']++;
   });
   destroyChart('chartAtt');
   const attCtx=document.getElementById('chartAtt');if(attCtx){
@@ -772,7 +715,6 @@ function renderSummaryDashboard(){
     });
   }
 }
-
 function renderRaw(){
   const ld=document.getElementById('rawLd'),tbl=document.getElementById('rawTbl'),em=document.getElementById('rawEm');
   ld.style.display='none';
@@ -803,8 +745,6 @@ function renderRaw(){
   document.getElementById('rawSl').textContent=`${start+1}–${Math.min(end,filtered.length)} of ${filtered.length}`;
   renderPag('rawPB',filtered.length,page,ps,p=>{RS.page=p;renderRaw();});
 }
-
-/* ── SUB-TAB SWITCH ── */
 function switchSubTab(name){
   document.querySelectorAll('.subpage').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.subtab').forEach(b=>b.classList.remove('active'));
@@ -812,7 +752,6 @@ function switchSubTab(name){
   document.getElementById('stab-'+name).classList.add('active');
   if(name==='summary') setTimeout(()=>renderSummaryDashboard(),50);
 }
-
 function initExamSidebar(ex){
   const data=DS[ex],cc=data.headers.find(h=>/center/i.test(h))||'';
   const sel=document.getElementById(ex+'CenterF');
@@ -820,13 +759,11 @@ function initExamSidebar(ex){
   if(cc)[...new Set(data.rows.map(r=>String(r[cc]||'')).filter(Boolean))].sort().forEach(v=>{const o=document.createElement('option');o.value=o.textContent=v;sel.appendChild(o);});
   filterExamName(ex);
 }
-
 function onExamCenterChange(ex){
   document.getElementById(ex+'NameI').value='';ES[ex].sel=null;filterExamName(ex);
   document.getElementById(ex+'Sum').classList.remove('vis');document.getElementById(ex+'KPI').innerHTML='';
   document.getElementById(ex+'PH').style.display='flex';document.getElementById(ex+'PS').style.display='none';
 }
-
 function filterExamName(ex){
   const data=DS[ex],dropId=ex+'NameDrop',drop=document.getElementById(dropId);
   if(!drop) return;
@@ -847,7 +784,6 @@ function filterExamName(ex){
     return`<div class="ritem ${isSel?'selected':''}" onclick="selectExamStudent('${ex}','${escAttr(rg)}')">${esc(nm)} <span style="font-size:10px;opacity:.5;font-family:var(--mono)">${esc(rg)}</span></div>`;
   }).join('');
 }
-
 function selectExamStudent(ex,reg){ES[ex].sel=reg;filterExamName(ex);renderExamStudent(ex);}
 
 const JEE_MAINS_COLS=['Total_Mains_Conducted','Mains_Attempted','Mains_Attn %','Avg_Mains_Marks%','Avg_Mains_Phy','Avg_Mains_Chem','Avg_Mains_Math'];
@@ -879,13 +815,11 @@ function formatKpiVal(val,col){
   if(val===null||val===undefined) return '–';
   let vs=String(val);
   if(vs===''||vs==='undefined'||vs==='null') return '–';
-  // percentage columns — widen match to include all *Marks%* and *Attn%* variants
   if(/attn%|attn\s%|marks%|markspercent/i.test(col)&&vs!=='–'&&!isNaN(vs)){
     const n=parseFloat(vs);vs=(n>0&&n<=1?(n*100).toFixed(1):n.toFixed(1))+'%';
   } else if(vs!=='–'&&!isNaN(vs)&&String(vs).includes('.')){vs=parseFloat(vs).toFixed(2);}
   return vs;
 }
-
 function buildKpiRow(cols,student,headers,overrides={}){
   return`<div class="krow">${cols.map((col,i)=>{
     const val=Object.prototype.hasOwnProperty.call(overrides,col)?overrides[col]:getKpiVal(student,col,headers);
@@ -893,7 +827,6 @@ function buildKpiRow(cols,student,headers,overrides={}){
     return`<div class="kcard ${COLORS[i%COLORS.length]}"><div class="ktit">${esc(lbl)}</div><div class="kval">${esc(vs)}</div></div>`;
   }).join('')}</div>`;
 }
-
 const SUBJECT_COL_MAP={
   'avg_Maths_marks':['maths_marks','math_marks','mathematics_marks'],
   'avg_biology_marks':['biology_marks'],'avg_socialstudies_marks':['socialstudies_marks','social_studies_marks','ss_marks'],
@@ -902,7 +835,6 @@ const SUBJECT_COL_MAP={
   'avg_physics_marks':['physics_marks'],'avg_chemistry_marks':['chemistry_marks'],
   'avg_botany_marks':['botany_marks'],'avg_zoology_marks':['zoology_marks'],
 };
-
 function computeSubjectAvgsFromResults(resultsRows,resHeaders){
   const avgs={};
   Object.entries(SUBJECT_COL_MAP).forEach(([kpiCol,candidates])=>{
@@ -916,7 +848,6 @@ function computeSubjectAvgsFromResults(resultsRows,resHeaders){
   });
   return avgs;
 }
-
 function computeExamKPIsFromResults(resultsRows,resHeaders){
   const rsCol=resolveCol(resHeaders,'resultstatus')||'resultstatus';
   const usCol=resolveCol(resHeaders,'userscore')||'userscore';
@@ -929,9 +860,7 @@ function computeExamKPIsFromResults(resultsRows,resHeaders){
   const avgMarksPct=sumTotal>0?((sumScore/sumTotal)*100).toFixed(1):null;
   return{'Total Exam':total||null,'Exam_Attended':attended||null,'Exam_Attn%':attnPct,'Avg_Marks%':avgMarksPct};
 }
-
 function computeAvgPct(rows){
-  // resolve column names flexibly
   if(!rows.length) return null;
   const sampleKeys=Object.keys(rows[0]);
   const usKey=sampleKeys.find(k=>/userscore/i.test(k))||'userscore';
@@ -969,16 +898,32 @@ function renderExamStudent(ex){
     {icon:'bi-calendar-event',v:fmtDate(student[jc])}
   ].filter(m=>m.v&&String(m.v).trim()&&String(m.v).trim()!=='–')
    .map(m=>`<span class="mchip"><i class="bi ${m.icon}"></i>${esc(String(m.v))}</span>`).join('');
+
   const kpiEl=document.getElementById(ex+'KPI');
   if(ex==='jee'){
     const allRes=getResultsForStudent('jee',reg);
     const mainsRows=allRes.filter(r=>/mains/i.test(String(r.test_pattern||'')));
     const advRows=allRes.filter(r=>/adv/i.test(String(r.test_pattern||'')));
-    const mainsAvg=computeAvgPct(mainsRows),advAvg=computeAvgPct(advRows);
+    const mainsAvgFromResults=computeAvgPct(mainsRows);
+    const advAvg=computeAvgPct(advRows);
+
+    // CHANGE 3: Read Avg_Mains_Marks% from JEE sheet Col N (index 13, 0-based)
+    // Col N is the 14th column. If it has a valid numeric value, prefer it over computed.
+    const jeeColN=DS.jee.headers[13]||null;
+    let mainsMarksPct=mainsAvgFromResults;
+    if(student&&jeeColN){
+      const rawN=String(student[jeeColN]??'').trim();
+      if(rawN!==''&&!isNaN(rawN)){
+        let n=parseFloat(rawN);
+        if(n>0&&n<=1) n=n*100;  // handle decimal fractions
+        mainsMarksPct=parseFloat(n.toFixed(2));
+      }
+    }
+
     kpiEl.innerHTML=`
       <div class="kpi-group">
         <div class="kpi-group-header"><i class="bi bi-calculator"></i>Mains</div>
-        ${buildKpiRow(JEE_MAINS_COLS,student,h,{'Avg_Mains_Marks%':mainsAvg})}
+        ${buildKpiRow(JEE_MAINS_COLS,student,h,{'Avg_Mains_Marks%':mainsMarksPct})}
       </div>
       <div class="kpi-group">
         <div class="kpi-group-header"><i class="bi bi-graph-up-arrow"></i>Advance</div>
@@ -1005,6 +950,7 @@ function renderExamStudent(ex){
   ES[ex].page=1;renderPerfTable(ex);
 }
 
+// CHANGE 2: Foundation PERF_DEF now includes Physics, Chemistry, Maths, Biology columns
 const PERF_DEF={
   neet:{
     cols:['test_date','test_name','totalmarks','userscore','markspercent','AIR','physics_marks','chemistry_marks','botany_marks','zoology_marks','resultstatus'],
@@ -1015,8 +961,8 @@ const PERF_DEF={
     labels:{test_date:'Date',test_name:'Test Name',test_pattern:'Pattern',paper_type:'Paper',totalmarks:'Total',userscore:'Score',markspercent:'%',AIR:'AIR',physics_marks:'Physics',chemistry_marks:'Chemistry',maths_marks:'Maths',resultstatus:'Status'}
   },
   foundation:{
-    cols:['test_date','test_name','totalmarks','userscore','markspercent','resultstatus'],
-    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',resultstatus:'Status'}
+    cols:['test_date','test_name','totalmarks','userscore','markspercent','physics_marks','chemistry_marks','maths_marks','biology_marks','resultstatus'],
+    labels:{test_date:'Date',test_name:'Test Name',totalmarks:'Total',userscore:'Score',markspercent:'%',physics_marks:'Physics',chemistry_marks:'Chemistry',maths_marks:'Maths',biology_marks:'Biology',resultstatus:'Status'}
   }
 };
 
@@ -1025,7 +971,6 @@ function buildPerfColMap(ex){
   def.cols.forEach(col=>{if(resHeaders.includes(col)){map[col]=col;return;}const real=resolveCol(resHeaders,col);if(real) map[col]=real;});
   return map;
 }
-
 function renderPerfTable(ex){
   const st=ES[ex],reg=st.sel;
   let rows=getResultsForStudent(ex,reg);
@@ -1058,7 +1003,6 @@ function renderPerfTable(ex){
   }).join('')+'</tr>').join('');}
   renderPag(ex+'PPB',rows.length,st.page,st.ps,p=>{ES[ex].page=p;renderPerfTable(ex);});
 }
-
 function renderStatsBar(ex,rows){
   const bar=document.getElementById(ex+'StatsBar');if(!bar) return;
   const resHeaders=DS.results.headers;
@@ -1074,9 +1018,8 @@ function renderStatsBar(ex,rows){
   const airs=rows.map(r=>parseInt(r[airCol]||'')).filter(v=>!isNaN(v));
   const bestAIR=airs.length?Math.min(...airs):null;
   const stat=(icon,color,val,lbl)=>`<div class="tstat"><div class="tstat-icon" style="background:${color}18;color:${color}"><i class="bi bi-${icon}"></i></div><div class="tstat-txt"><div class="tv">${val}</div><div class="tl">${lbl}</div></div></div>`;
-  bar.innerHTML=stat('clipboard-check','#6366f1',total,'Total Tests')+stat('person-check','#10b981',present,'Tests Attended')+(avgPct!==null?stat('graph-up','#f59e0b',avgPct.toFixed(1)+'%','Avg Marks %'):'')+( bestAIR!==null?stat('trophy','#a78bfa',bestAIR,'Best AIR'):'');
+  bar.innerHTML=stat('clipboard-check','#6366f1',total,'Total Tests')+stat('person-check','#10b981',present,'Tests Attended')+(avgPct!==null?stat('graph-up','#f59e0b',avgPct.toFixed(1)+'%','Avg Marks %'):'')+(bestAIR!==null?stat('trophy','#a78bfa',bestAIR,'Best AIR'):'');
 }
-
 function renderLatestCard(ex,rows){
   const card=document.getElementById(ex+'Latest');if(!card) return;
   if(!rows.length){card.classList.remove('vis');return;}
@@ -1097,11 +1040,9 @@ function renderLatestCard(ex,rows){
   const pills=[r[tdCol]?fmtDate(r[tdCol]):null,r[tmCol]?'Total: '+r[tmCol]:null,r[usCol]?'Score: '+r[usCol]:null,pmpDisplay,r[airCol]?'AIR: '+r[airCol]:null,r[rsCol]||null].filter(Boolean);
   document.getElementById(ex+'LatestPills').innerHTML=pills.map(p=>`<span class="lc-pill">${esc(p)}</span>`).join('');
 }
-
 function applyPF(ex){ES[ex].page=1;renderPerfTable(ex);}
 function pfSz(ex){ES[ex].ps=+document.getElementById(ex+'SZ').value;ES[ex].page=1;renderPerfTable(ex);}
 function pfSort(ex,col){const st=ES[ex];st.sc===col?(st.sd=st.sd==='asc'?'desc':'asc'):(st.sc=col,st.sd='asc');renderPerfTable(ex);}
-
 function exportRaw(fmt){
   const data=RS.filtered;if(!data.length){showToast('No students to export','error');return;}
   const headers=RAW_SHOW.filter(h=>DS.raw.headers.includes(h));
@@ -1117,7 +1058,6 @@ function exportRaw(fmt){
     XLSX.writeFile(wb,`students_${new Date().toISOString().slice(0,10)}.xlsx`);showToast('Excel downloaded','success');
   }
 }
-
 function exportD(ex,fmt){
   const data=ES[ex].pf;if(!data.length){showToast('No data to export','error');return;}
   const reg=ES[ex].sel||ex;const colMap=buildPerfColMap(ex);const def=PERF_DEF[ex]||{cols:[]};
@@ -1133,7 +1073,6 @@ function exportD(ex,fmt){
     XLSX.writeFile(wb,`${ex}_${reg}.xlsx`);showToast('Excel downloaded','success');
   }
 }
-
 function renderPag(cid,total,current,size,onPage){
   const el=document.getElementById(cid);if(!el) return;
   const tp=Math.ceil(total/size);if(tp<=1){el.innerHTML='';return;}
@@ -1145,7 +1084,6 @@ function renderPag(cid,total,current,size,onPage){
   if(e<tp-1) h+=`<span class="pgb" style="cursor:default;border:none;color:var(--text3)">…</span>`;if(e<tp) h+=btn(tp,tp);
   h+=btn('›',current<tp?current+1:null);el.innerHTML=h;
 }
-
 function switchTab(tab){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
@@ -1153,7 +1091,6 @@ function switchTab(tab){
   document.getElementById('tab-'+tab).classList.add('active');
   if(tab==='raw') setTimeout(()=>renderSummaryDashboard(),50);
 }
-
 function showToast(msg,type='info'){
   const icons={success:'bi-check-circle-fill',error:'bi-exclamation-triangle-fill',info:'bi-info-circle-fill'};
   const d=document.createElement('div');d.className=`tmsg ${type}`;
@@ -1163,7 +1100,6 @@ function showToast(msg,type='info'){
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function escAttr(s){return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;');}
-
 document.addEventListener('DOMContentLoaded',()=>{loadAll();setInterval(loadAll,5*60*1000);});
 </script>
 </body>
