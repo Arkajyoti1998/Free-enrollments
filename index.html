@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
 :root{
   --bg:#0b0e14;--surface:#111520;--surface2:#161c2d;--surface3:#1d2540;
@@ -25,8 +26,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 /* ── NAV ── */
 .nav{
   position:sticky;top:0;z-index:1000;height:54px;
-  background:rgba(11,14,20,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
+  background:rgba(15,18,30,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid #2e3d6a;
   display:flex;align-items:center;padding:0 20px;gap:10px;overflow-x:auto;
 }
 .nav::-webkit-scrollbar{display:none}
@@ -34,16 +35,16 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .brand-logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),#818cf8);display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;box-shadow:0 0 0 1px rgba(99,102,241,.4),var(--indigo-glow);}
 .brand-txt{font-family:var(--display);font-size:13.5px;font-weight:800;color:#fff;letter-spacing:-.2px;white-space:nowrap}
 .brand-txt small{display:block;font-size:8px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text3);font-family:var(--sans);margin-top:1px}
-.nav-sep{width:1px;height:22px;background:var(--border2);flex-shrink:0;margin:0 4px}
+.nav-sep{width:1px;height:22px;background:#3d4f7a;flex-shrink:0;margin:0 4px}
 .tabs{display:flex;gap:2px}
-.tab{display:flex;align-items:center;gap:6px;padding:5px 12px;border:none;background:transparent;border-radius:var(--r8);font-family:var(--sans);font-weight:600;font-size:12px;color:#8896b0;cursor:pointer;transition:all .15s;white-space:nowrap;}
-.tab:hover{background:var(--surface2);color:#c8d4e8}
-.tab.active{background:var(--indigo-dim);color:#dde5ff;font-weight:700;box-shadow:0 0 0 1px #6366f145}
+.tab{display:flex;align-items:center;gap:6px;padding:5px 12px;border:none;background:transparent;border-radius:var(--r8);font-family:var(--sans);font-weight:600;font-size:12px;color:#b0bdd4;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tab:hover{background:var(--surface2);color:#e2e8f0}
+.tab.active{background:rgba(99,102,241,.25);color:#ffffff;font-weight:700;box-shadow:0 0 0 1px #6366f160}
 .tab i{font-size:13px}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.upd-lbl{font-size:10.5px;color:var(--text3);font-family:var(--mono);white-space:nowrap}
-.rfbtn{display:flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);border-radius:var(--r8);font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;font-family:var(--sans);}
-.rfbtn:hover{border-color:var(--indigo);color:#a5b4fc;background:var(--indigo-dim)}
+.upd-lbl{font-size:10.5px;color:#94a3b8;font-family:var(--mono);white-space:nowrap}
+.rfbtn{display:flex;align-items:center;gap:5px;padding:5px 13px;border:1px solid #3d4f7a;background:#1e2740;color:#c8d4e8;border-radius:var(--r8);font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;font-family:var(--sans);}
+.rfbtn:hover{border-color:var(--indigo);color:#fff;background:rgba(99,102,241,.3)}
 .rfbtn.spinning i{animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* ── PAGES ── */
@@ -270,9 +271,9 @@ table.dt tbody td strong{color:var(--text);font-family:var(--mono);font-size:12p
 <nav class="nav">
   <!-- CHANGE 1: Removed "PW Analytics" text; logo enlarged & more glowing -->
   <a class="brand" href="#">
-    <div class="brand-logo" style="width:42px;height:42px;border-radius:13px;font-size:21px;flex-shrink:0;box-shadow:0 0 0 2px rgba(99,102,241,.55),0 0 24px #6366f180,0 0 48px #6366f130;"><i class="bi bi-mortarboard-fill"></i></div>
+    <div class="brand-logo" style="width:44px;height:44px;border-radius:13px;font-size:22px;flex-shrink:0;background:linear-gradient(135deg,#818cf8,#6366f1);box-shadow:0 0 0 2px #a5b4fc,0 0 20px #6366f1cc,0 0 40px #6366f160;color:#fff;"><i class="bi bi-mortarboard-fill"></i></div>
     <div style="display:flex;flex-direction:column;justify-content:center;gap:2px;">
-      <span style="font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#8898b8;font-family:var(--sans);white-space:nowrap;">AY 26-27 · Free Enrollments</span>
+      <span style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#ffffff;font-family:var(--sans);white-space:nowrap;text-shadow:0 0 16px rgba(255,255,255,.6),0 1px 3px rgba(0,0,0,.5);">AY 26-27 · Free Enrollments</span>
     </div>
   </a>
   <div class="nav-sep"></div>
@@ -498,6 +499,9 @@ const ES={};
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 let chartInstances={};
 
+// Register the datalabels plugin globally
+if(typeof ChartDataLabels!=='undefined') Chart.register(ChartDataLabels);
+
 function fmtDate(v){
   if(!v||String(v).trim()===''||v==='-') return '–';
   const s=String(v).trim();let d;
@@ -654,7 +658,19 @@ function buildBarChart(canvasId,labels,values,color){
   chartInstances[canvasId]=new Chart(ctx,{
     type:'bar',
     data:{labels,datasets:[{data:values,backgroundColor:color+'cc',borderColor:color,borderWidth:1.5,borderRadius:6,hoverBackgroundColor:color}]},
-    options:{...JSON.parse(JSON.stringify(CHART_DEFAULTS)),plugins:{...JSON.parse(JSON.stringify(CHART_DEFAULTS.plugins))}}
+    options:{
+      ...JSON.parse(JSON.stringify(CHART_DEFAULTS)),
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
+        datalabels:{
+          anchor:'end',align:'end',offset:2,
+          color:'#c8d4e8',font:{size:10,weight:'600',family:"'DM Mono',monospace"},
+          formatter:(v)=>v>0?v:''
+        }
+      },
+      layout:{padding:{top:20}}
+    }
   });
 }
 function buildHorizBarChart(canvasId,labels,values){
@@ -663,20 +679,47 @@ function buildHorizBarChart(canvasId,labels,values){
   chartInstances[canvasId]=new Chart(ctx,{
     type:'bar',
     data:{labels,datasets:[{data:values,backgroundColor:CHART_COLORS.map(c=>c+'cc'),borderColor:CHART_COLORS,borderWidth:1.5,borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}},
-      scales:{x:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}},y:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:11}}}}}
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      layout:{padding:{right:36}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
+        datalabels:{
+          anchor:'end',align:'right',offset:4,
+          color:'#c8d4e8',font:{size:10,weight:'600',family:"'DM Mono',monospace"},
+          formatter:(v)=>v>0?v:''
+        }
+      },
+      scales:{
+        x:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}},
+        y:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:11}}}
+      }
+    }
   });
 }
 function buildDoughnutChart(canvasId,labels,values){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
+  const total=values.reduce((a,b)=>a+b,0);
   chartInstances[canvasId]=new Chart(ctx,{
     type:'doughnut',
     data:{labels,datasets:[{data:values,backgroundColor:CHART_COLORS.map(c=>c+'cc'),borderColor:CHART_COLORS,borderWidth:1.5,hoverOffset:6}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
-      plugins:{legend:{display:true,position:'right',labels:{color:'#94a3b8',font:{size:11},padding:10,usePointStyle:true,pointStyleWidth:8}},
-               tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}}}
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'58%',
+      plugins:{
+        legend:{display:true,position:'right',labels:{color:'#94a3b8',font:{size:11},padding:10,usePointStyle:true,pointStyleWidth:8}},
+        tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
+        datalabels:{
+          color:'#fff',font:{size:10,weight:'700',family:"'DM Mono',monospace"},
+          textShadow:'0 1px 3px rgba(0,0,0,.7)',
+          formatter:(v,ctx)=>{
+            const pct=total>0?Math.round(v/total*100):0;
+            return pct>=5?`${v}\n(${pct}%)`:'';
+          }
+        }
+      }
+    }
   });
 }
 function renderSummaryDashboard(){
@@ -711,7 +754,19 @@ function renderSummaryDashboard(){
     chartInstances['chartAtt']=new Chart(attCtx,{
       type:'bar',
       data:{labels:Object.keys(buckets),datasets:[{data:Object.values(buckets),backgroundColor:['#f43f5ecc','#f59e0bcc','#fbbf24cc','#34d399cc','#10b981cc'],borderColor:['#f43f5e','#f59e0b','#fbbf24','#34d399','#10b981'],borderWidth:1.5,borderRadius:6}]},
-      options:{...JSON.parse(JSON.stringify(CHART_DEFAULTS)),plugins:{legend:{display:false},tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}}}
+      options:{
+        ...JSON.parse(JSON.stringify(CHART_DEFAULTS)),
+        layout:{padding:{top:20}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
+          datalabels:{
+            anchor:'end',align:'end',offset:2,
+            color:'#c8d4e8',font:{size:10,weight:'600',family:"'DM Mono',monospace"},
+            formatter:(v)=>v>0?v:''
+          }
+        }
+      }
     });
   }
 }
