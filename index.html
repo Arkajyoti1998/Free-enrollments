@@ -9,69 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script>
-/* ── Inline chartjs-plugin-datalabels (v2 core, always available) ── */
-(function(){
-  const LABEL_KEY='$datalabels';
-  const plugin={
-    id:'datalabels',
-    afterDatasetsDraw(chart){
-      const ctx=chart.ctx;
-      chart.data.datasets.forEach((ds,di)=>{
-        const meta=chart.getDatasetMeta(di);
-        if(meta.hidden) return;
-        const opts=chart.options.plugins&&chart.options.plugins.datalabels;
-        if(!opts) return;
-        meta.data.forEach((el,i)=>{
-          const raw=ds.data[i];
-          const fmt=opts.formatter;
-          let lbl=fmt?fmt(raw,{dataIndex:i,datasetIndex:di,chart}):raw;
-          if(lbl===null||lbl===undefined||lbl==='') return;
-          lbl=String(lbl);
-          const lines=lbl.split('\n');
-          const font=opts.font||{};
-          const sz=font.size||11;
-          const fw=font.weight||'700';
-          const ff=font.family||"'DM Mono',monospace";
-          ctx.save();
-          ctx.font=`${fw} ${sz}px ${ff}`;
-          ctx.fillStyle=opts.color||'#fff';
-          ctx.textAlign='center';
-          ctx.textBaseline='middle';
-          // position
-          const pos=el.tooltipPosition(false);
-          const anchor=opts.anchor||'end';
-          const align=opts.align||'top';
-          const offset=(opts.offset||0);
-          const lineH=sz+3;
-          const totalH=lines.length*lineH;
-          let x=pos.x, y=pos.y;
-          if(anchor==='end'&&(align==='top'||align==='end')){
-            // vertical bar: above the bar top
-            const bp=el.base!==undefined?Math.min(pos.y,el.base):pos.y;
-            y=bp - offset - totalH/2 - 4;
-          } else if(anchor==='end'&&align==='right'){
-            // horizontal bar: right of bar end
-            x=pos.x + offset + 4;
-            y=pos.y;
-          }
-          if(opts.textStrokeWidth&&opts.textStrokeColor){
-            ctx.strokeStyle=opts.textStrokeColor;
-            ctx.lineWidth=opts.textStrokeWidth;
-            lines.forEach((ln,li)=>ctx.strokeText(ln,x,y+(li-(lines.length-1)/2)*lineH));
-          }
-          lines.forEach((ln,li)=>ctx.fillText(ln,x,y+(li-(lines.length-1)/2)*lineH));
-          ctx.restore();
-        });
-      });
-    }
-  };
-  window.ChartDataLabels=plugin;
-  // Register immediately if Chart.js already loaded
-  if(window.Chart) Chart.register(plugin);
-})();
-function _dl(){return window.ChartDataLabels||null;}
-</script>
 <style>
 :root{
   --bg:#0b0e14;--surface:#111520;--surface2:#161c2d;--surface3:#1d2540;
@@ -714,68 +651,43 @@ function destroyChart(id){if(chartInstances[id]){chartInstances[id].destroy();de
 function buildBarChart(canvasId,labels,values,color){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
-  if(_dl()) try{Chart.register(_dl());}catch(e){}
-  const cfg={
+  chartInstances[canvasId]=new Chart(ctx,{
     type:'bar',
     data:{labels,datasets:[{data:values,backgroundColor:color+'cc',borderColor:color,borderWidth:1.5,borderRadius:6,hoverBackgroundColor:color}]},
     options:{
       responsive:true,maintainAspectRatio:false,
-      layout:{padding:{top:24}},
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
-        datalabels:{anchor:'end',align:'top',offset:1,color:'#e2e8f0',font:{size:11,weight:'700',family:"'DM Mono',monospace"},formatter:(v)=>v>0?v:''}
-      },
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}},
       scales:{x:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}},y:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}}}
     }
-  };
-  if(_dl()) cfg.plugins=[_dl()];
-  chartInstances[canvasId]=new Chart(ctx,cfg);
+  });
 }
 function buildHorizBarChart(canvasId,labels,values){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
-  if(_dl()) try{Chart.register(_dl());}catch(e){}
-  const cfg={
+  chartInstances[canvasId]=new Chart(ctx,{
     type:'bar',
     data:{labels,datasets:[{data:values,backgroundColor:CHART_COLORS.map(c=>c+'cc'),borderColor:CHART_COLORS,borderWidth:1.5,borderRadius:4}]},
     options:{
       indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      layout:{padding:{right:40}},
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
-        datalabels:{anchor:'end',align:'right',offset:4,color:'#e2e8f0',font:{size:11,weight:'700',family:"'DM Mono',monospace"},formatter:(v)=>v>0?v:''}
-      },
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}},
       scales:{x:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}},y:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:11}}}}
     }
-  };
-  if(_dl()) cfg.plugins=[_dl()];
-  chartInstances[canvasId]=new Chart(ctx,cfg);
+  });
 }
 function buildDoughnutChart(canvasId,labels,values){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
-  if(_dl()) try{Chart.register(_dl());}catch(e){}
-  const total=values.reduce((a,b)=>a+b,0);
-  const cfg={
+  chartInstances[canvasId]=new Chart(ctx,{
     type:'doughnut',
     data:{labels,datasets:[{data:values,backgroundColor:CHART_COLORS.map(c=>c+'cc'),borderColor:CHART_COLORS,borderWidth:1.5,hoverOffset:6}]},
     options:{
-      responsive:true,maintainAspectRatio:false,cutout:'58%',
+      responsive:true,maintainAspectRatio:false,cutout:'62%',
       plugins:{
         legend:{display:true,position:'right',labels:{color:'#94a3b8',font:{size:11},padding:10,usePointStyle:true,pointStyleWidth:8}},
-        tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
-        datalabels:{
-          color:'#fff',font:{size:10,weight:'700',family:"'DM Mono',monospace"},
-          textStrokeColor:'rgba(0,0,0,.6)',textStrokeWidth:2,
-          formatter:(v,c)=>{const pct=total>0?Math.round(v/total*100):0;return pct>=5?`${v}\n${pct}%`:''}
-        }
+        tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}
       }
     }
-  };
-  if(_dl()) cfg.plugins=[_dl()];
-  chartInstances[canvasId]=new Chart(ctx,cfg);
+  });
 }
 function renderSummaryDashboard(){
   const rows=RS.filtered,total=rows.length;
@@ -806,23 +718,15 @@ function renderSummaryDashboard(){
   });
   destroyChart('chartAtt');
   const attCtx=document.getElementById('chartAtt');if(attCtx){
-    if(_dl()) try{Chart.register(_dl());}catch(e){}
-    const attCfg={
+    chartInstances['chartAtt']=new Chart(attCtx,{
       type:'bar',
       data:{labels:Object.keys(buckets),datasets:[{data:Object.values(buckets),backgroundColor:['#f43f5ecc','#f59e0bcc','#fbbf24cc','#34d399cc','#10b981cc'],borderColor:['#f43f5e','#f59e0b','#fbbf24','#34d399','#10b981'],borderWidth:1.5,borderRadius:6}]},
       options:{
         responsive:true,maintainAspectRatio:false,
-        layout:{padding:{top:24}},
-        plugins:{
-          legend:{display:false},
-          tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8},
-          datalabels:{anchor:'end',align:'top',offset:1,color:'#e2e8f0',font:{size:11,weight:'700',family:"'DM Mono',monospace"},formatter:(v)=>v>0?v:''}
-        },
+        plugins:{legend:{display:false},tooltip:{backgroundColor:'#1d2540',titleColor:'#e2e8f0',bodyColor:'#94a3b8',borderColor:'#263050',borderWidth:1,padding:10,cornerRadius:8}},
         scales:{x:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}},y:{grid:{color:'#1e2740'},ticks:{color:'#475569',font:{size:11}}}}
       }
-    };
-    if(_dl()) attCfg.plugins=[_dl()];
-    chartInstances['chartAtt']=new Chart(attCtx,attCfg);
+    });
   }
 }
 function renderRaw(){
