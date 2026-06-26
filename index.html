@@ -9,19 +9,68 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script>
-// Register globally as soon as both scripts are parsed
-window._dlReady = false;
-function _ensureDL(){
-  if(!window._dlReady && window.Chart && window.ChartDataLabels){
-    Chart.register(ChartDataLabels);
-    window._dlReady = true;
-  }
-}
-// Try immediately, also on DOMContentLoaded as fallback
-_ensureDL();
-document.addEventListener('DOMContentLoaded', _ensureDL);
+/* ── Inline chartjs-plugin-datalabels (v2 core, always available) ── */
+(function(){
+  const LABEL_KEY='$datalabels';
+  const plugin={
+    id:'datalabels',
+    afterDatasetsDraw(chart){
+      const ctx=chart.ctx;
+      chart.data.datasets.forEach((ds,di)=>{
+        const meta=chart.getDatasetMeta(di);
+        if(meta.hidden) return;
+        const opts=chart.options.plugins&&chart.options.plugins.datalabels;
+        if(!opts) return;
+        meta.data.forEach((el,i)=>{
+          const raw=ds.data[i];
+          const fmt=opts.formatter;
+          let lbl=fmt?fmt(raw,{dataIndex:i,datasetIndex:di,chart}):raw;
+          if(lbl===null||lbl===undefined||lbl==='') return;
+          lbl=String(lbl);
+          const lines=lbl.split('\n');
+          const font=opts.font||{};
+          const sz=font.size||11;
+          const fw=font.weight||'700';
+          const ff=font.family||"'DM Mono',monospace";
+          ctx.save();
+          ctx.font=`${fw} ${sz}px ${ff}`;
+          ctx.fillStyle=opts.color||'#fff';
+          ctx.textAlign='center';
+          ctx.textBaseline='middle';
+          // position
+          const pos=el.tooltipPosition(false);
+          const anchor=opts.anchor||'end';
+          const align=opts.align||'top';
+          const offset=(opts.offset||0);
+          const lineH=sz+3;
+          const totalH=lines.length*lineH;
+          let x=pos.x, y=pos.y;
+          if(anchor==='end'&&(align==='top'||align==='end')){
+            // vertical bar: above the bar top
+            const bp=el.base!==undefined?Math.min(pos.y,el.base):pos.y;
+            y=bp - offset - totalH/2 - 4;
+          } else if(anchor==='end'&&align==='right'){
+            // horizontal bar: right of bar end
+            x=pos.x + offset + 4;
+            y=pos.y;
+          }
+          if(opts.textStrokeWidth&&opts.textStrokeColor){
+            ctx.strokeStyle=opts.textStrokeColor;
+            ctx.lineWidth=opts.textStrokeWidth;
+            lines.forEach((ln,li)=>ctx.strokeText(ln,x,y+(li-(lines.length-1)/2)*lineH));
+          }
+          lines.forEach((ln,li)=>ctx.fillText(ln,x,y+(li-(lines.length-1)/2)*lineH));
+          ctx.restore();
+        });
+      });
+    }
+  };
+  window.ChartDataLabels=plugin;
+  // Register immediately if Chart.js already loaded
+  if(window.Chart) Chart.register(plugin);
+})();
+function _dl(){return window.ChartDataLabels||null;}
 </script>
 <style>
 :root{
@@ -662,10 +711,10 @@ function makeCountMap(rows,col){
   return Object.entries(m).sort((a,b)=>b[1]-a[1]);
 }
 function destroyChart(id){if(chartInstances[id]){chartInstances[id].destroy();delete chartInstances[id];}}
-function _dl(){return window.ChartDataLabels||null;}
 function buildBarChart(canvasId,labels,values,color){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
+  if(_dl()) try{Chart.register(_dl());}catch(e){}
   const cfg={
     type:'bar',
     data:{labels,datasets:[{data:values,backgroundColor:color+'cc',borderColor:color,borderWidth:1.5,borderRadius:6,hoverBackgroundColor:color}]},
@@ -686,6 +735,7 @@ function buildBarChart(canvasId,labels,values,color){
 function buildHorizBarChart(canvasId,labels,values){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
+  if(_dl()) try{Chart.register(_dl());}catch(e){}
   const cfg={
     type:'bar',
     data:{labels,datasets:[{data:values,backgroundColor:CHART_COLORS.map(c=>c+'cc'),borderColor:CHART_COLORS,borderWidth:1.5,borderRadius:4}]},
@@ -706,6 +756,7 @@ function buildHorizBarChart(canvasId,labels,values){
 function buildDoughnutChart(canvasId,labels,values){
   destroyChart(canvasId);
   const ctx=document.getElementById(canvasId);if(!ctx) return;
+  if(_dl()) try{Chart.register(_dl());}catch(e){}
   const total=values.reduce((a,b)=>a+b,0);
   const cfg={
     type:'doughnut',
@@ -755,6 +806,7 @@ function renderSummaryDashboard(){
   });
   destroyChart('chartAtt');
   const attCtx=document.getElementById('chartAtt');if(attCtx){
+    if(_dl()) try{Chart.register(_dl());}catch(e){}
     const attCfg={
       type:'bar',
       data:{labels:Object.keys(buckets),datasets:[{data:Object.values(buckets),backgroundColor:['#f43f5ecc','#f59e0bcc','#fbbf24cc','#34d399cc','#10b981cc'],borderColor:['#f43f5e','#f59e0b','#fbbf24','#34d399','#10b981'],borderWidth:1.5,borderRadius:6}]},
